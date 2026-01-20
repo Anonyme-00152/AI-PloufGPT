@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DarkGPT - Administration Système</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-deep: #050505;
+            --accent-red: #ff1f1f;
+            --text-main: #ffffff;
+            --glass-bg: rgba(255, 255, 255, 0.04);
+            --glass-border: 1px solid rgba(255, 255, 255, 0.18);
+        }
+        body {
+            background-color: var(--bg-deep);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-image: radial-gradient(circle at 50% 50%, rgba(100, 0, 0, 0.1) 0%, transparent 80%);
+        }
+        .admin-container {
+            width: 95%;
+            max-width: 1000px;
+            margin: 20px;
+        }
+        .admin-card {
+            background: var(--glass-bg);
+            border: var(--glass-border);
+            padding: 40px;
+            border-radius: 24px;
+            backdrop-filter: blur(20px);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.8);
+        }
+        h1 { color: var(--accent-red); text-align: center; margin-bottom: 30px; text-transform: uppercase; letter-spacing: 2px; }
+        
+        /* Login */
+        #admin-login { max-width: 400px; margin: auto; }
+        .input-group { margin-bottom: 20px; }
+        label { display: block; margin-bottom: 8px; color: #b0b0b0; font-size: 14px; }
+        input, select {
+            width: 100%;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.2);
+            padding: 12px;
+            color: white;
+            border-radius: 10px;
+            outline: none;
+            font-family: 'JetBrains Mono', monospace;
+        }
+        .btn {
+            background: var(--accent-red);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: bold;
+            width: 100%;
+            transition: 0.3s;
+        }
+        .btn:hover { box-shadow: 0 0 15px var(--accent-red); transform: scale(1.02); }
+        
+        /* Content */
+        #admin-content { display: none; }
+        .dashboard-grid { display: grid; grid-template-columns: 1fr 2fr; gap: 20px; }
+        
+        .generator-box {
+            background: rgba(255,255,255,0.03);
+            padding: 20px;
+            border-radius: 15px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .keys-table-container {
+            background: rgba(255,255,255,0.03);
+            padding: 20px;
+            border-radius: 15px;
+            border: 1px solid rgba(255,255,255,0.1);
+            max-height: 500px;
+            overflow-y: auto;
+        }
+        
+        table { width: 100%; border-collapse: collapse; font-size: 13px; }
+        th { text-align: left; color: var(--accent-red); padding: 10px; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        td { padding: 10px; border-bottom: 1px solid rgba(255,255,255,0.05); font-family: 'JetBrains Mono', monospace; }
+        
+        .status-active { color: #00ff88; }
+        .status-expired { color: #ff4444; }
+        
+        .delete-btn { color: #ff4444; cursor: pointer; background: none; border: none; }
+        
+        .nav-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .logout-link { color: #b0b0b0; text-decoration: none; font-size: 14px; }
+        .logout-link:hover { color: white; }
+    </style>
+</head>
+<body>
+
+    <div class="admin-container">
+        <!-- LOGIN ADMIN -->
+        <div id="admin-login" class="admin-card">
+            <h1>ACCÈS ADMIN</h1>
+            <div class="input-group">
+                <label>Code d'accès sécurisé</label>
+                <input type="password" id="admin-pass" placeholder="••••••••">
+            </div>
+            <button class="btn" onclick="loginAdmin()">DÉVERROUILLER</button>
+            <p id="login-err" style="color: var(--accent-red); display: none; text-align: center; margin-top: 15px;">Accès refusé : Code incorrect</p>
+        </div>
+
+        <!-- CONTENU ADMIN -->
+        <div id="admin-content" class="admin-card">
+            <div class="nav-header">
+                <a href="/" class="logout-link"><i class="fas fa-arrow-left"></i> Retour au site</a>
+                <a href="#" onclick="logoutAdmin()" class="logout-link">Déconnexion <i class="fas fa-sign-out-alt"></i></a>
+            </div>
+            
+            <h1>GESTION DES LICENCES</h1>
+            
+            <div class="dashboard-grid">
+                <div class="generator-box">
+                    <h3>Générer une clé</h3>
+                    <div class="input-group" style="margin-top:20px;">
+                        <label>Type d'abonnement</label>
+                        <select id="plan-type">
+                            <option value="Premium">Premium (1 mois - 15.99€)</option>
+                            <option value="Trimestriel">Trimestriel (3 mois - 39.99€)</option>
+                            <option value="Permanent">Permanent (À vie - 199€)</option>
+                        </select>
+                    </div>
+                    <button class="btn" onclick="generateKey()">GÉNÉRER LA CLÉ</button>
+                    
+                    <div id="new-key-display" style="margin-top: 20px; display: none;">
+                        <label>Clé générée :</label>
+                        <div style="display: flex; gap: 10px;">
+                            <input type="text" id="generated-key-val" readonly>
+                            <button class="btn" style="width: auto;" onclick="copyKey()"><i class="fas fa-copy"></i></button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="keys-table-container">
+                    <h3>Clés actives & Historique</h3>
+                    <table id="keys-table">
+                        <thead>
+                            <tr>
+                                <th>Clé</th>
+                                <th>Plan</th>
+                                <th>Expiration</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="keys-body">
+                            <!-- Rempli par JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let adminToken = localStorage.getItem('admin_token') || "";
+
+        function loginAdmin() {
+            const pass = document.getElementById('admin-pass').value;
+            // On stocke le mot de passe comme token pour les requêtes API
+            adminToken = pass;
+            loadKeys();
+        }
+
+        function logoutAdmin() {
+            localStorage.removeItem('admin_token');
+            location.reload();
+        }
+
+        async function loadKeys() {
+            try {
+                const response = await fetch('/api/admin/keys', {
+                    headers: { 'Authorization': 'Bearer ' + adminToken }
+                });
+                
+                if (response.status === 401) {
+                    document.getElementById('login-err').style.display = 'block';
+                    return;
+                }
+                
+                const keys = await response.json();
+                localStorage.setItem('admin_token', adminToken);
+                
+                document.getElementById('admin-login').style.display = 'none';
+                document.getElementById('admin-content').style.display = 'block';
+                
+                const tbody = document.getElementById('keys-body');
+                tbody.innerHTML = '';
+                
+                keys.forEach(k => {
+                    const row = document.createElement('tr');
+                    const isExpired = k.expires_at && new Date(k.expires_at) < new Date();
+                    const expiryText = k.expires_at ? k.expires_at.split(' ')[0] : 'Jamais';
+                    
+                    row.innerHTML = `
+                        <td style="color:${isExpired ? '#ff4444' : '#fff'}">${k.key}</td>
+                        <td>${k.plan}</td>
+                        <td class="${isExpired ? 'status-expired' : 'status-active'}">${expiryText}</td>
+                        <td><button class="delete-btn" onclick="deleteKey('${k.key}')"><i class="fas fa-trash"></i></button></td>
+                    `;
+                    tbody.appendChild(row);
+                });
+            } catch (e) {
+                console.error(e);
+            }
+        }
+
+        async function generateKey() {
+            const planType = document.getElementById('plan-type').value;
+            try {
+                const response = await fetch('/api/admin/generate-key', {
+                    method: 'POST',
+                    headers: { 
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + adminToken 
+                    },
+                    body: JSON.stringify({ plan_type: planType })
+                });
+                const data = await response.json();
+                if (data.key) {
+                    document.getElementById('new-key-display').style.display = 'block';
+                    document.getElementById('generated-key-val').value = data.key;
+                    loadKeys();
+                }
+            } catch (e) {
+                alert("Erreur lors de la génération");
+            }
+        }
+
+        async function deleteKey(key) {
+            if (!confirm("Supprimer cette clé ?")) return;
+            try {
+                await fetch('/api/admin/delete-key', {
+                    method: 'POST',
+                    headers: { 
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + adminToken 
+                    },
+                    body: JSON.stringify({ key: key })
+                });
+                loadKeys();
+            } catch (e) {
+                alert("Erreur lors de la suppression");
+            }
+        }
+
+        function copyKey() {
+            const copyText = document.getElementById("generated-key-val");
+            copyText.select();
+            document.execCommand("copy");
+            alert("Clé copiée !");
+        }
+
+        // Auto-login si token présent
+        if (adminToken) {
+            loadKeys();
+        }
+    </script>
+</body>
+</html>

@@ -1,195 +1,135 @@
-<p align="center">
-  <img src="assets/logo.jpg" width="200"/>
-</p>
+# 🚀 DarkGPT - AI-PloufGPT Edition
 
-English | [中文](README_zh.md) | [한국어](README_ko.md) | [日本語](README_ja.md)
+Une plateforme d'IA provocatrice et sans filtre pour démontrer les techniques de jailbreaking d'IA à des fins éducatives.
 
-[![GitHub stars](https://img.shields.io/github/stars/FoundationAgents/OpenManus?style=social)](https://github.com/FoundationAgents/OpenManus/stargazers)
-&ensp;
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) &ensp;
-[![Discord Follow](https://dcbadge.vercel.app/api/server/DYn29wFk9z?style=flat)](https://discord.gg/DYn29wFk9z)
-[![Demo](https://img.shields.io/badge/Demo-Hugging%20Face-yellow)](https://huggingface.co/spaces/lyh-917/OpenManusDemo)
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.15186407.svg)](https://doi.org/10.5281/zenodo.15186407)
+## ⚠️ Avertissement Important
 
-# 👋 OpenManus
+**Cette application est fournie strictement à des fins éducatives et de recherche.** Les utilisateurs sont responsables de l'utilisation éthique et légale de cette application. L'abus des techniques de jailbreaking d'IA à des fins nuisibles est interdit et peut violer les lois et les conditions d'utilisation.
 
-Manus is incredible, but OpenManus can achieve any idea without an *Invite Code* 🛫!
+## 🎯 À Propos
 
-Our team members [@Xinbin Liang](https://github.com/mannaandpoem) and [@Jinyu Xiang](https://github.com/XiangJinyu) (core authors), along with [@Zhaoyang Yu](https://github.com/MoshiQAQ), [@Jiayi Zhang](https://github.com/didiforgithub), and [@Sirui Hong](https://github.com/stellaHSR), we are from [@MetaGPT](https://github.com/geekan/MetaGPT). The prototype is launched within 3 hours and we are keeping building!
+**DarkGPT** est un système d'IA créé par **DEDE** qui démontre comment les modèles de langage peuvent être manipulés via l'ingénierie de prompt. Cette plateforme éducative permet d'explorer les vulnérabilités des IA et de comprendre les mécanismes de sécurité.
 
-It's a simple implementation, so we welcome any suggestions, contributions, and feedback!
+### Caractéristiques Principales
 
-Enjoy your own agent with OpenManus!
+- 🤖 **4 Modes d'IA** : Normal, Hacker, Vulgar, Expert
+- 🔐 **Système de Licences** : Gestion des clés d'accès
+- 📊 **Admin Dashboard** : Gestion complète des licences
+- 🌐 **Support Multi-API** : Groq ou OpenRouter
+- ⚡ **Déploiement Facile** : Vercel, Heroku, ou serveur classique
+- 🎨 **Interface Moderne** : Design cyberpunk avec animations
 
-We're also excited to introduce [OpenManus-RL](https://github.com/OpenManus/OpenManus-RL), an open-source project dedicated to reinforcement learning (RL)- based (such as GRPO) tuning methods for LLM agents, developed collaboratively by researchers from UIUC and OpenManus.
+## 🚀 Démarrage Rapide
 
-## Project Demo
+### Installation Locale
 
-<video src="https://private-user-images.githubusercontent.com/61239030/420168772-6dcfd0d2-9142-45d9-b74e-d10aa75073c6.mp4?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NDEzMTgwNTksIm5iZiI6MTc0MTMxNzc1OSwicGF0aCI6Ii82MTIzOTAzMC80MjAxNjg3NzItNmRjZmQwZDItOTE0Mi00NWQ5LWI3NGUtZDEwYWE3NTA3M2M2Lm1wND9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNTAzMDclMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjUwMzA3VDAzMjIzOVomWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPTdiZjFkNjlmYWNjMmEzOTliM2Y3M2VlYjgyNDRlZDJmOWE3NWZhZjE1MzhiZWY4YmQ3NjdkNTYwYTU5ZDA2MzYmWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0In0.UuHQCgWYkh0OQq9qsUWqGsUbhG3i9jcZDAMeHjLt5T4" data-canonical-src="https://private-user-images.githubusercontent.com/61239030/420168772-6dcfd0d2-9142-45d9-b74e-d10aa75073c6.mp4?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NDEzMTgwNTksIm5iZiI6MTc0MTMxNzc1OSwicGF0aCI6Ii82MTIzOTAzMC80MjAxNjg3NzItNmRjZmQwZDItOTE0Mi00NWQ5LWI3NGUtZDEwYWE3NTA3M2M2Lm1wND9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNTAzMDclMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjUwMzA3VDAzMjIzOVomWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPTdiZjFkNjlmYWNjMmEzOTliM2Y3M2VlYjgyNDRlZDJmOWE3NWZhZjE1MzhiZWY4YmQ3NjdkNTYwYTU5ZDA2MzYmWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0In0.UuHQCgWYkh0OQq9qsUWqGsUbhG3i9jcZDAMeHjLt5T4" controls="controls" muted="muted" class="d-block rounded-bottom-2 border-top width-fit" style="max-height:640px; min-height: 200px"></video>
+1. **Cloner le repository**
+   ```bash
+   git clone https://github.com/Anonyme-00152/AI-PloufGPT.git
+   cd AI-PloufGPT
+   ```
 
-## Installation
+2. **Créer un environnement virtuel**
+   ```bash
+   python -m venv venv
+   source venv/bin/activate
+   ```
 
-We provide two installation methods. Method 2 (using uv) is recommended for faster installation and better dependency management.
+3. **Installer les dépendances**
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-### Method 1: Using conda
+4. **Configurer les variables d'environnement**
+   ```bash
+   export GROQ_API_KEY=votre_clé_groq_ici
+   export ADMIN_PASSWORD=votre_mot_de_passe_admin
+   ```
 
-1. Create a new conda environment:
+5. **Lancer l'application**
+   ```bash
+   python app.py
+   ```
 
-```bash
-conda create -n open_manus python=3.12
-conda activate open_manus
-```
+L'application sera accessible à `http://localhost:10000`
 
-2. Clone the repository:
+## 🌐 Déploiement sur Vercel
 
-```bash
-git clone https://github.com/FoundationAgents/OpenManus.git
-cd OpenManus
-```
+### Configuration Vercel
 
-3. Install dependencies:
+1. **Pousser sur GitHub** (déjà fait)
 
-```bash
-pip install -r requirements.txt
-```
+2. **Importer sur Vercel**
+   - Allez sur [vercel.com](https://vercel.com)
+   - Connectez votre compte GitHub
+   - Cliquez "Import Project"
+   - Sélectionnez `Anonyme-00152/AI-PloufGPT`
 
-### Method 2: Using uv (Recommended)
+3. **Configurer les variables d'environnement**
+   - Allez dans Settings → Environment Variables
+   - Ajoutez `GROQ_API_KEY` ou `OPENROUTER_API_KEY`
+   - Ajoutez `ADMIN_PASSWORD`
 
-1. Install uv (A fast Python package installer and resolver):
+4. **Déployer**
+   ```bash
+   vercel --prod
+   ```
 
-```bash
-curl -LsSf https://astral.sh/uv/install.sh | sh
-```
+## 📡 API Endpoints
 
-2. Clone the repository:
+### Chat Endpoint
 
-```bash
-git clone https://github.com/FoundationAgents/OpenManus.git
-cd OpenManus
-```
-
-3. Create a new virtual environment and activate it:
-
-```bash
-uv venv --python 3.12
-source .venv/bin/activate  # On Unix/macOS
-# Or on Windows:
-# .venv\Scripts\activate
-```
-
-4. Install dependencies:
-
-```bash
-uv pip install -r requirements.txt
-```
-
-### Browser Automation Tool (Optional)
-```bash
-playwright install
-```
-
-## Configuration
-
-OpenManus requires configuration for the LLM APIs it uses. Follow these steps to set up your configuration:
-
-1. Create a `config.toml` file in the `config` directory (you can copy from the example):
+**POST** `/api/chat`
 
 ```bash
-cp config/config.example.toml config/config.toml
+curl -X POST https://votre-app.vercel.app/api/chat \
+  -H "Content-Type: application/json" \
+  -d '{
+    "prompt": "Votre question ici",
+    "mode": "normal",
+    "license_key": "votre-clé-de-licence"
+  }'
 ```
 
-2. Edit `config/config.toml` to add your API keys and customize settings:
+**Modes disponibles** :
+- `normal` : DarkGPT standard
+- `hacker` : Mode technique
+- `vulgar` : Mode sans filtre
+- `expert` : Mode technique avancé
 
-```toml
-# Global LLM configuration
-[llm]
-model = "gpt-4o"
-base_url = "https://api.openai.com/v1"
-api_key = "sk-..."  # Replace with your actual API key
-max_tokens = 4096
-temperature = 0.0
+## 🔑 Système de Licences
 
-# Optional configuration for specific LLM models
-[llm.vision]
-model = "gpt-4o"
-base_url = "https://api.openai.com/v1"
-api_key = "sk-..."  # Replace with your actual API key
-```
+Les licences peuvent être gérées via le dashboard admin (`/admin`).
 
-## Quick Start
+## 🎨 Système d'IA DarkGPT
 
-One line for run OpenManus:
+Créé par **DEDE**, ce système d'IA démontre :
+- L'ingénierie de prompt avancée
+- Les techniques de jailbreaking
+- Les vulnérabilités des modèles de langage
+- L'importance de la robustesse des systèmes d'IA
 
-```bash
-python main.py
-```
+## 📚 Documentation
 
-Then input your idea via terminal!
+- [DARKGPT_INTEGRATION.md](./DARKGPT_INTEGRATION.md) - Détails techniques
+- [VERCEL_DEPLOY.md](./VERCEL_DEPLOY.md) - Guide Vercel complet
 
-For MCP tool version, you can run:
-```bash
-python run_mcp.py
-```
+## ⚠️ Responsabilité
 
-For unstable multi-agent version, you also can run:
+Cette application est fournie à titre éducatif uniquement. Les utilisateurs acceptent que :
+- Tout abus est de la responsabilité de l'utilisateur
+- Les créateurs ne sont pas responsables des utilisations malveillantes
+- L'utilisation doit respecter les lois locales et internationales
 
-```bash
-python run_flow.py
-```
+## 📄 Licence
 
-### Custom Adding Multiple Agents
+MIT License
 
-Currently, besides the general OpenManus Agent, we have also integrated the DataAnalysis Agent, which is suitable for data analysis and data visualization tasks. You can add this agent to `run_flow` in `config.toml`.
+## 👤 Créateur
 
-```toml
-# Optional configuration for run-flow
-[runflow]
-use_data_analysis_agent = true     # Disabled by default, change to true to activate
-```
-In addition, you need to install the relevant dependencies to ensure the agent runs properly: [Detailed Installation Guide](app/tool/chart_visualization/README.md##Installation)
+**DarkGPT** créé par **DEDE**
 
-## How to contribute
+---
 
-We welcome any friendly suggestions and helpful contributions! Just create issues or submit pull requests.
-
-Or contact @mannaandpoem via 📧email: mannaandpoem@gmail.com
-
-**Note**: Before submitting a pull request, please use the pre-commit tool to check your changes. Run `pre-commit run --all-files` to execute the checks.
-
-## Community Group
-Join our networking group on Feishu and share your experience with other developers!
-
-<div align="center" style="display: flex; gap: 20px;">
-    <img src="assets/community_group.jpg" alt="OpenManus 交流群" width="300" />
-</div>
-
-## Star History
-
-[![Star History Chart](https://api.star-history.com/svg?repos=FoundationAgents/OpenManus&type=Date)](https://star-history.com/#FoundationAgents/OpenManus&Date)
-
-## Sponsors
-Thanks to [PPIO](https://ppinfra.com/user/register?invited_by=OCPKCN&utm_source=github_openmanus&utm_medium=github_readme&utm_campaign=link) for computing source support.
-> PPIO: The most affordable and easily-integrated MaaS and GPU cloud solution.
-
-
-## Acknowledgement
-
-Thanks to [anthropic-computer-use](https://github.com/anthropics/anthropic-quickstarts/tree/main/computer-use-demo), [browser-use](https://github.com/browser-use/browser-use) and [crawl4ai](https://github.com/unclecode/crawl4ai) for providing basic support for this project!
-
-Additionally, we are grateful to [AAAJ](https://github.com/metauto-ai/agent-as-a-judge), [MetaGPT](https://github.com/geekan/MetaGPT), [OpenHands](https://github.com/All-Hands-AI/OpenHands) and [SWE-agent](https://github.com/SWE-agent/SWE-agent).
-
-We also thank stepfun(阶跃星辰) for supporting our Hugging Face demo space.
-
-OpenManus is built by contributors from MetaGPT. Huge thanks to this agent community!
-
-## Cite
-```bibtex
-@misc{openmanus2025,
-  author = {Xinbin Liang and Jinyu Xiang and Zhaoyang Yu and Jiayi Zhang and Sirui Hong and Sheng Fan and Xiao Tang and Bang Liu and Yuyu Luo and Chenglin Wu},
-  title = {OpenManus: An open-source framework for building general AI agents},
-  year = {2025},
-  publisher = {Zenodo},
-  doi = {10.5281/zenodo.15186407},
-  url = {https://doi.org/10.5281/zenodo.15186407},
-}
-```
+**Dernière mise à jour** : 20 Janvier 2026
+**Plateforme** : AI-PloufGPT

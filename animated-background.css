@@ -1,0 +1,863 @@
+/* ===== FOND ANIMÉ SPECTACULAIRE AVEC PARTICULES ===== */
+
+/* Conteneur de particules animées */
+.animated-bg-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    overflow: hidden;
+    background: #050505;
+}
+
+/* Couche de base avec gradient dynamique */
+.bg-layer-base {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        135deg,
+        #050505 0%,
+        #0d0808 25%,
+        #1a0505 50%,
+        #0d0808 75%,
+        #050505 100%
+    );
+    animation: gradientShift 15s ease-in-out infinite;
+}
+
+@keyframes gradientShift {
+    0%, 100% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+}
+
+/* Couche de lumière rouge pulsante */
+.bg-layer-glow {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(
+        circle at 50% 50%,
+        rgba(255, 31, 31, 0.15) 0%,
+        rgba(255, 31, 31, 0.08) 25%,
+        transparent 70%
+    );
+    animation: glowPulse 8s ease-in-out infinite;
+}
+
+@keyframes glowPulse {
+    0%, 100% {
+        opacity: 0.3;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.8;
+        transform: scale(1.1);
+    }
+}
+
+/* Couche de lumière bleue/cyan */
+.bg-layer-cyan {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(
+        circle at 80% 20%,
+        rgba(31, 255, 255, 0.1) 0%,
+        rgba(31, 255, 255, 0.05) 20%,
+        transparent 60%
+    );
+    animation: cyanDrift 20s ease-in-out infinite;
+}
+
+@keyframes cyanDrift {
+    0%, 100% {
+        transform: translate(0, 0);
+        opacity: 0.4;
+    }
+    50% {
+        transform: translate(50px, -50px);
+        opacity: 0.8;
+    }
+}
+
+/* Couche de lumière violette */
+.bg-layer-purple {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(
+        circle at 20% 80%,
+        rgba(188, 31, 255, 0.1) 0%,
+        rgba(188, 31, 255, 0.05) 20%,
+        transparent 60%
+    );
+    animation: purpleDrift 25s ease-in-out infinite reverse;
+}
+
+@keyframes purpleDrift {
+    0%, 100% {
+        transform: translate(0, 0);
+        opacity: 0.3;
+    }
+    50% {
+        transform: translate(-40px, 40px);
+        opacity: 0.7;
+    }
+}
+
+/* Particules animées */
+.particle {
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.particle-small {
+    width: 2px;
+    height: 2px;
+    background: rgba(255, 31, 31, 0.8);
+    box-shadow: 0 0 8px rgba(255, 31, 31, 0.6);
+}
+
+.particle-medium {
+    width: 4px;
+    height: 4px;
+    background: rgba(31, 255, 255, 0.6);
+    box-shadow: 0 0 12px rgba(31, 255, 255, 0.5);
+}
+
+.particle-large {
+    width: 6px;
+    height: 6px;
+    background: rgba(188, 31, 255, 0.7);
+    box-shadow: 0 0 15px rgba(188, 31, 255, 0.5);
+}
+
+/* Animation des particules */
+@keyframes float {
+    0% {
+        opacity: 0;
+        transform: translateY(100vh) translateX(0);
+    }
+    10% {
+        opacity: 1;
+    }
+    90% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-100vh) translateX(100px);
+    }
+}
+
+@keyframes floatLeft {
+    0% {
+        opacity: 0;
+        transform: translateY(100vh) translateX(0);
+    }
+    10% {
+        opacity: 1;
+    }
+    90% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-100vh) translateX(-100px);
+    }
+}
+
+.particle-small {
+    animation: float 15s infinite linear;
+}
+
+.particle-medium {
+    animation: floatLeft 20s infinite linear;
+}
+
+.particle-large {
+    animation: float 25s infinite linear;
+}
+
+/* Couche de grille holographique */
+.bg-layer-grid {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image:
+        linear-gradient(0deg, transparent 24%, rgba(255, 31, 31, 0.05) 25%, rgba(255, 31, 31, 0.05) 26%, transparent 27%, transparent 74%, rgba(255, 31, 31, 0.05) 75%, rgba(255, 31, 31, 0.05) 76%, transparent 77%, transparent),
+        linear-gradient(90deg, transparent 24%, rgba(255, 31, 31, 0.05) 25%, rgba(255, 31, 31, 0.05) 26%, transparent 27%, transparent 74%, rgba(255, 31, 31, 0.05) 75%, rgba(255, 31, 31, 0.05) 76%, transparent 77%, transparent);
+    background-size: 50px 50px;
+    animation: gridShift 30s linear infinite;
+}
+
+@keyframes gridShift {
+    0% {
+        background-position: 0 0;
+    }
+    100% {
+        background-position: 50px 50px;
+    }
+}
+
+/* Couche d'effet de scan horizontal */
+.bg-layer-scan {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        0deg,
+        transparent 0%,
+        rgba(255, 31, 31, 0.03) 50%,
+        transparent 100%
+    );
+    background-size: 100% 8px;
+    animation: scanMove 4s linear infinite;
+    pointer-events: none;
+}
+
+@keyframes scanMove {
+    0% {
+        background-position: 0 0;
+    }
+    100% {
+        background-position: 0 8px;
+    }
+}
+
+/* Couche de bruit/texture */
+.bg-layer-noise {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" seed="2"/></filter><rect width="100" height="100" fill="rgba(255,255,255,0.02)" filter="url(%23noise)"/></svg>');
+    opacity: 0.5;
+    animation: noiseShift 8s linear infinite;
+}
+
+@keyframes noiseShift {
+    0%, 100% {
+        opacity: 0.5;
+    }
+    50% {
+        opacity: 0.8;
+    }
+}
+
+/* Couche de lumière ambiante supérieure */
+.bg-layer-top-light {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 40%;
+    background: linear-gradient(
+        180deg,
+        rgba(31, 255, 255, 0.08) 0%,
+        transparent 100%
+    );
+    animation: topLightPulse 6s ease-in-out infinite;
+}
+
+@keyframes topLightPulse {
+    0%, 100% {
+        opacity: 0.3;
+    }
+    50% {
+        opacity: 0.8;
+    }
+}
+
+/* Couche de lumière ambiante inférieure */
+.bg-layer-bottom-light {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 40%;
+    background: linear-gradient(
+        180deg,
+        transparent 0%,
+        rgba(255, 31, 31, 0.1) 100%
+    );
+    animation: bottomLightPulse 7s ease-in-out infinite;
+}
+
+@keyframes bottomLightPulse {
+    0%, 100% {
+        opacity: 0.3;
+    }
+    50% {
+        opacity: 0.7;
+    }
+}
+
+/* ===== AMÉLIORATIONS UI DESIGN ===== */
+
+/* Amélioration des cartes de licence */
+.license-card {
+    backdrop-filter: blur(50px) !important;
+    -webkit-backdrop-filter: blur(50px) !important;
+    border: 2px solid rgba(255, 31, 31, 0.3) !important;
+    box-shadow: 
+        0 8px 32px rgba(0, 0, 0, 0.8),
+        0 0 40px rgba(255, 31, 31, 0.2),
+        inset 0 1px 1px rgba(255, 255, 255, 0.1) !important;
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    animation: cardHover 0.6s ease-out;
+}
+
+@keyframes cardHover {
+    0% {
+        transform: scale(0.95) translateY(20px);
+        opacity: 0;
+    }
+    100% {
+        transform: scale(1) translateY(0);
+        opacity: 1;
+    }
+}
+
+.license-card:hover {
+    border-color: rgba(255, 31, 31, 0.8) !important;
+    box-shadow: 
+        0 20px 50px rgba(255, 31, 31, 0.3),
+        0 0 60px rgba(255, 31, 31, 0.4),
+        inset 0 1px 1px rgba(255, 255, 255, 0.2) !important;
+    transform: translateY(-10px) scale(1.02);
+}
+
+/* Amélioration du bouton de licence */
+.license-btn {
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    box-shadow: 
+        0 0 20px rgba(255, 31, 31, 0.6),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.license-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transition: left 0.5s;
+}
+
+.license-btn:hover::before {
+    left: 100%;
+}
+
+.license-btn:hover {
+    box-shadow: 
+        0 0 30px rgba(255, 31, 31, 0.8),
+        0 0 50px rgba(255, 31, 31, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
+    transform: scale(1.05);
+}
+
+/* Amélioration des boutons de navigation */
+.nav-btn {
+    backdrop-filter: blur(40px) !important;
+    -webkit-backdrop-filter: blur(40px) !important;
+    border: 1px solid rgba(255, 31, 31, 0.3) !important;
+    box-shadow: 
+        0 4px 15px rgba(0, 0, 0, 0.5),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.nav-btn:hover {
+    border-color: rgba(255, 31, 31, 0.8) !important;
+    box-shadow: 
+        0 8px 25px rgba(255, 31, 31, 0.3),
+        0 0 30px rgba(255, 31, 31, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
+    transform: translateY(-3px);
+    background: rgba(255, 31, 31, 0.15) !important;
+}
+
+/* Amélioration des modales */
+.modal-card {
+    backdrop-filter: blur(50px) !important;
+    -webkit-backdrop-filter: blur(50px) !important;
+    border: 2px solid rgba(255, 31, 31, 0.3) !important;
+    box-shadow: 
+        0 20px 60px rgba(0, 0, 0, 0.9),
+        0 0 50px rgba(255, 31, 31, 0.2),
+        inset 0 1px 1px rgba(255, 255, 255, 0.1) !important;
+    animation: modalSlideIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes modalSlideIn {
+    0% {
+        transform: scale(0.8) translateY(30px);
+        opacity: 0;
+    }
+    100% {
+        transform: scale(1) translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Amélioration des cartes de prix */
+.price-card {
+    backdrop-filter: blur(40px) !important;
+    -webkit-backdrop-filter: blur(40px) !important;
+    border: 2px solid rgba(255, 31, 31, 0.2) !important;
+    box-shadow: 
+        0 8px 32px rgba(0, 0, 0, 0.7),
+        inset 0 1px 1px rgba(255, 255, 255, 0.05) !important;
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.price-card:hover {
+    border-color: rgba(255, 31, 31, 0.8) !important;
+    box-shadow: 
+        0 20px 50px rgba(255, 31, 31, 0.3),
+        0 0 60px rgba(255, 31, 31, 0.2),
+        inset 0 1px 1px rgba(255, 255, 255, 0.1) !important;
+    transform: translateY(-15px) scale(1.03);
+}
+
+/* Amélioration des champs de saisie */
+.license-input {
+    backdrop-filter: blur(20px) !important;
+    -webkit-backdrop-filter: blur(20px) !important;
+    border: 2px solid rgba(255, 31, 31, 0.2) !important;
+    box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.5) !important;
+    transition: all 0.3s ease;
+}
+
+.license-input:focus {
+    border-color: rgba(255, 31, 31, 0.8) !important;
+    box-shadow: 
+        inset 0 2px 10px rgba(0, 0, 0, 0.5),
+        0 0 20px rgba(255, 31, 31, 0.3) !important;
+    background: rgba(255, 31, 31, 0.05) !important;
+}
+
+/* Amélioration du conteneur de chat */
+#chat-container {
+    backdrop-filter: blur(10px) !important;
+    -webkit-backdrop-filter: blur(10px) !important;
+}
+
+/* Amélioration des messages */
+.msg {
+    animation: messageAppear 0.4s ease-out;
+}
+
+@keyframes messageAppear {
+    0% {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.user-msg {
+    background: linear-gradient(135deg, rgba(255, 31, 31, 0.2), rgba(255, 31, 31, 0.1)) !important;
+    border-left: 3px solid rgba(255, 31, 31, 0.6) !important;
+    box-shadow: 0 4px 15px rgba(255, 31, 31, 0.1) !important;
+}
+
+.ai-msg {
+    background: linear-gradient(135deg, rgba(31, 255, 255, 0.1), rgba(188, 31, 255, 0.1)) !important;
+    border-left: 3px solid rgba(31, 255, 255, 0.4) !important;
+    box-shadow: 0 4px 15px rgba(31, 255, 255, 0.1) !important;
+}
+
+/* Amélioration de la section d'entrée */
+.input-section {
+    backdrop-filter: blur(30px) !important;
+    -webkit-backdrop-filter: blur(30px) !important;
+    border-top: 2px solid rgba(255, 31, 31, 0.2) !important;
+    box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.5) !important;
+}
+
+/* Amélioration de la boîte d'entrée */
+.input-box {
+    backdrop-filter: blur(20px) !important;
+    -webkit-backdrop-filter: blur(20px) !important;
+    border: 2px solid rgba(255, 31, 31, 0.2) !important;
+    box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.5) !important;
+    transition: all 0.3s ease;
+}
+
+.input-box:focus-within {
+    border-color: rgba(255, 31, 31, 0.8) !important;
+    box-shadow: 
+        inset 0 2px 10px rgba(0, 0, 0, 0.5),
+        0 0 20px rgba(255, 31, 31, 0.2) !important;
+}
+
+/* Amélioration du bouton d'envoi */
+.send-btn {
+    background: linear-gradient(135deg, #ff1f1f, #ff5555) !important;
+    box-shadow: 
+        0 0 20px rgba(255, 31, 31, 0.6),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.send-btn:hover {
+    box-shadow: 
+        0 0 30px rgba(255, 31, 31, 0.8),
+        0 0 50px rgba(255, 31, 31, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
+    transform: scale(1.1);
+}
+
+.send-btn:active {
+    transform: scale(0.95);
+}
+
+/* Amélioration des chips */
+.chip {
+    backdrop-filter: blur(20px) !important;
+    -webkit-backdrop-filter: blur(20px) !important;
+    border: 1px solid rgba(255, 31, 31, 0.3) !important;
+    background: rgba(255, 31, 31, 0.1) !important;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3) !important;
+    transition: all 0.3s ease;
+}
+
+.chip:hover {
+    border-color: rgba(255, 31, 31, 0.8) !important;
+    background: rgba(255, 31, 31, 0.2) !important;
+    box-shadow: 
+        0 8px 25px rgba(255, 31, 31, 0.2),
+        0 0 20px rgba(255, 31, 31, 0.1) !important;
+    transform: translateY(-3px);
+}
+
+/* Amélioration du header */
+header {
+    backdrop-filter: blur(30px) !important;
+    -webkit-backdrop-filter: blur(30px) !important;
+    border-bottom: 1px solid rgba(255, 31, 31, 0.2) !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5) !important;
+}
+
+/* Amélioration du logo */
+.logo {
+    transition: all 0.3s ease;
+    text-shadow: 
+        0 0 20px rgba(255, 31, 31, 0.8),
+        0 0 40px rgba(255, 31, 31, 0.4) !important;
+}
+
+.logo:hover {
+    transform: scale(1.1);
+    text-shadow: 
+        0 0 30px rgba(255, 31, 31, 1),
+        0 0 60px rgba(255, 31, 31, 0.6) !important;
+}
+
+/* Amélioration des icônes de bouton */
+.icon-btn {
+    backdrop-filter: blur(20px) !important;
+    -webkit-backdrop-filter: blur(20px) !important;
+    border: 1px solid rgba(255, 31, 31, 0.2) !important;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3) !important;
+    transition: all 0.3s ease;
+}
+
+.icon-btn:hover {
+    border-color: rgba(255, 31, 31, 0.8) !important;
+    box-shadow: 
+        0 8px 25px rgba(255, 31, 31, 0.2),
+        0 0 20px rgba(255, 31, 31, 0.1) !important;
+    transform: translateY(-3px);
+    background: rgba(255, 31, 31, 0.15) !important;
+}
+
+/* Amélioration des boutons d'export */
+.export-btn {
+    backdrop-filter: blur(20px) !important;
+    -webkit-backdrop-filter: blur(20px) !important;
+    border: 1px solid rgba(255, 31, 31, 0.2) !important;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3) !important;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.export-btn:hover {
+    border-color: rgba(255, 31, 31, 0.8) !important;
+    box-shadow: 
+        0 12px 30px rgba(255, 31, 31, 0.2),
+        0 0 30px rgba(255, 31, 31, 0.1) !important;
+    transform: translateY(-5px) scale(1.05);
+    background: rgba(255, 31, 31, 0.15) !important;
+}
+
+/* Amélioration des éléments de l'historique */
+.history-item {
+    backdrop-filter: blur(15px) !important;
+    -webkit-backdrop-filter: blur(15px) !important;
+    border: 1px solid rgba(255, 31, 31, 0.2) !important;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3) !important;
+    transition: all 0.3s ease;
+}
+
+.history-item:hover {
+    border-color: rgba(255, 31, 31, 0.8) !important;
+    background: rgba(255, 31, 31, 0.15) !important;
+    box-shadow: 
+        0 8px 25px rgba(255, 31, 31, 0.2),
+        0 0 20px rgba(255, 31, 31, 0.1) !important;
+    transform: translateX(5px);
+}
+
+/* Amélioration du badge */
+.badge {
+    box-shadow: 
+        0 0 15px rgba(255, 31, 31, 0.8),
+        0 0 30px rgba(255, 31, 31, 0.4) !important;
+    animation: badgePulse 2s ease-in-out infinite;
+}
+
+@keyframes badgePulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+}
+
+/* Support des sélecteurs et inputs */
+select, input[type="range"] {
+    backdrop-filter: blur(15px) !important;
+    -webkit-backdrop-filter: blur(15px) !important;
+    border: 1px solid rgba(255, 31, 31, 0.2) !important;
+    box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.3) !important;
+    transition: all 0.3s ease;
+}
+
+select:focus, input[type="range"]:focus {
+    border-color: rgba(255, 31, 31, 0.8) !important;
+    box-shadow: 
+        inset 0 2px 8px rgba(0, 0, 0, 0.3),
+        0 0 15px rgba(255, 31, 31, 0.2) !important;
+}
+
+/* Amélioration du lien de fermeture */
+.close-modal {
+    transition: all 0.3s ease;
+}
+
+.close-modal:hover {
+    transform: rotate(90deg) scale(1.2);
+    text-shadow: 0 0 10px rgba(255, 31, 31, 0.8);
+}
+
+/* Amélioration des boutons de thème */
+.export-btn[onclick*="setTheme"] {
+    position: relative;
+}
+
+.export-btn[onclick*="setTheme"]::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 2px solid currentColor;
+    opacity: 0;
+    animation: themePulse 1.5s ease-in-out infinite;
+}
+
+@keyframes themePulse {
+    0%, 100% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.5);
+    }
+    50% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1.2);
+    }
+}
+
+/* Amélioration du mode OSINT */
+.active-osint {
+    background: rgba(255, 31, 31, 0.3) !important;
+    border-color: rgba(255, 31, 31, 0.8) !important;
+    box-shadow: 
+        0 0 20px rgba(255, 31, 31, 0.4),
+        inset 0 0 15px rgba(255, 31, 31, 0.2) !important;
+    animation: osintGlow 1s ease-in-out infinite;
+}
+
+@keyframes osintGlow {
+    0%, 100% {
+        box-shadow: 
+            0 0 20px rgba(255, 31, 31, 0.4),
+            inset 0 0 15px rgba(255, 31, 31, 0.2);
+    }
+    50% {
+        box-shadow: 
+            0 0 30px rgba(255, 31, 31, 0.6),
+            inset 0 0 20px rgba(255, 31, 31, 0.3);
+    }
+}
+
+/* Amélioration du message OSINT */
+.osint-msg {
+    background: linear-gradient(135deg, rgba(255, 31, 31, 0.15), rgba(188, 31, 31, 0.1)) !important;
+    border-left: 4px solid rgba(255, 31, 31, 0.8) !important;
+    box-shadow: 
+        0 4px 15px rgba(255, 31, 31, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05) !important;
+}
+
+/* Amélioration du tag BETA */
+.beta-tag {
+    animation: betaPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes betaPulse {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 0.8;
+    }
+    50% {
+        transform: scale(1.1);
+        opacity: 1;
+    }
+}
+
+/* Amélioration du footer des cartes */
+.card-footer {
+    transition: all 0.3s ease;
+    text-shadow: 0 0 10px rgba(255, 31, 31, 0.3);
+}
+
+.price-card:hover .card-footer {
+    text-shadow: 0 0 15px rgba(255, 31, 31, 0.6);
+}
+
+/* Amélioration du bouton retour */
+.back-btn {
+    backdrop-filter: blur(20px) !important;
+    -webkit-backdrop-filter: blur(20px) !important;
+    border: 1px solid rgba(255, 31, 31, 0.2) !important;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3) !important;
+    transition: all 0.3s ease;
+}
+
+.back-btn:hover {
+    border-color: rgba(255, 31, 31, 0.8) !important;
+    box-shadow: 
+        0 8px 25px rgba(255, 31, 31, 0.2),
+        0 0 20px rgba(255, 31, 31, 0.1) !important;
+    transform: translateX(-3px);
+    background: rgba(255, 31, 31, 0.15) !important;
+}
+
+/* Amélioration de la superposition de licence */
+#license-overlay {
+    backdrop-filter: blur(60px) !important;
+    -webkit-backdrop-filter: blur(60px) !important;
+}
+
+/* Amélioration de la superposition de prix */
+#pricing-ui {
+    backdrop-filter: blur(60px) !important;
+    -webkit-backdrop-filter: blur(60px) !important;
+}
+
+/* Amélioration de la superposition modale */
+.modal-overlay {
+    backdrop-filter: blur(60px) !important;
+    -webkit-backdrop-filter: blur(60px) !important;
+}
+
+/* Amélioration du message d'erreur */
+#error-msg {
+    animation: errorShake 0.5s ease-in-out;
+    text-shadow: 0 0 10px rgba(255, 31, 31, 0.6);
+}
+
+@keyframes errorShake {
+    0%, 100% {
+        transform: translateX(0);
+    }
+    25% {
+        transform: translateX(-10px);
+    }
+    75% {
+        transform: translateX(10px);
+    }
+}
+
+/* Amélioration des transitions globales */
+* {
+    transition-property: all;
+    transition-timing-function: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Désactiver les transitions pour les animations */
+.particle, .animated-bg-container > * {
+    transition: none !important;
+}
+
+/* Amélioration de la scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(255, 31, 31, 0.05);
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(255, 31, 31, 0.3);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 31, 31, 0.6);
+}
+
+/* Amélioration des états actifs */
+button:active, .nav-btn:active, .chip:active {
+    transform: scale(0.95) !important;
+}
+
+/* Amélioration de la visibilité du texte */
+body {
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+/* Amélioration de la lisibilité */
+h1, h2, h3, h4, h5, h6 {
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+}
+
+/* Amélioration du contraste */
+.text-dim {
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+}
