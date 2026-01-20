@@ -177,7 +177,7 @@
         function loginAdmin() {
             const pass = document.getElementById('admin-pass').value;
             if (!pass) {
-                document.getElementById('login-alert').innerHTML = '<div class="alert alert-error">Veuillez entrer le code d'accès</div>';
+                document.getElementById('login-alert').innerHTML = '<div class="alert alert-error">Veuillez entrer le code d\'accès</div>';
                 return;
             }
             adminToken = pass;
@@ -196,7 +196,7 @@
                 });
                 
                 if (response.status === 401) {
-                    document.getElementById('login-alert').innerHTML = '<div class="alert alert-error">Code d'accès incorrect</div>';
+                    document.getElementById('login-alert').innerHTML = '<div class="alert alert-error">Code d\'accès incorrect</div>';
                     adminToken = "";
                     return;
                 }
@@ -220,7 +220,7 @@
                     const isExpired = k.expires_at && new Date(k.expires_at) < new Date();
                     const expiryText = k.expires_at ? k.expires_at.split(' ')[0] : 'Jamais';
                     
-                    row.innerHTML = '<td style="color:' + (isExpired ? '#ff4444' : '#fff') + '">' + k.key + '</td><td>' + k.plan + '</td><td class="' + (isExpired ? 'status-expired' : 'status-active') + '">' + expiryText + '</td><td><button class="delete-btn" onclick="deleteKey('' + k.key + '')"><i class="fas fa-trash"></i></button></td>';
+                   row.innerHTML = '<td style="color:' + (isExpired ? '#ff4444' : '#fff') + '">' + k.key + '</td><td>' + k.plan + '</td><td class="' + (isExpired ? 'status-expired' : 'status-active') + '">' + expiryText + '</td><td><button class="delete-btn" onclick="deleteKey(\'' + k.key + '\')"><i class="fas fa-trash"></i></button></td>';
                     tbody.appendChild(row);
                 });
             } catch (e) {
@@ -242,7 +242,7 @@
                 });
                 
                 if (response.status === 401) {
-                    showAlert('Erreur d'authentification. Veuillez vous reconnecter.');
+                    showAlert('Erreur d\'authentification. Veuillez vous reconnecter.');
                     logoutAdmin();
                     return;
                 }
