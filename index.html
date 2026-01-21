@@ -517,6 +517,7 @@
                 <button class="nav-btn" onclick="openModal('settings-modal')"><i class="fas fa-cog"></i> Paramètres</button>
                 <button class="nav-btn" onclick="openExport()"><i class="fas fa-download"></i> Exporter</button>
                 <button class="nav-btn" style="border-color: #00ff88;" onclick="toggleOsint()"><i class="fas fa-search"></i> Mode OSINT</button>
+                <button class="nav-btn" onclick="location.href='/admin'"><i class="fas fa-user-shield"></i> ADMIN</button>
                 <button class="nav-btn" onclick="logout()"><i class="fas fa-sign-out-alt"></i></button>
             </div>
         </header>
@@ -559,7 +560,7 @@
             
             <div class="settings-group">
                 <label>Modèle d'IA</label>
-                <select id="model-select">
+                <select id="setting-model" onchange="saveSettings()">
                     <option value="nousresearch/hermes-3-llama-3.1-405b:free">Hermes 3 Llama 3.1 405B (Recommandé)</option>
                     <option value="meta-llama/llama-3.1-70b-instruct:free">Llama 3.1 70B Instruct</option>
                     <option value="mistralai/mistral-7b-instruct:free">Mistral 7B Instruct</option>
@@ -570,13 +571,13 @@
 
             <div class="settings-group">
                 <label>Température (Créativité) <span class="range-val" id="temp-val">0.9</span></label>
-                <input type="range" id="temp-range" min="0" max="2" step="0.1" value="0.9" oninput="document.getElementById('temp-val').textContent=this.value">
+                <input type="range" id="setting-temp" min="0" max="2" step="0.1" value="0.9" oninput="updateTempVal(this.value); saveSettings();">
                 <div class="settings-info">Plus élevé = plus créatif et imprévisible.</div>
             </div>
 
             <div class="settings-group">
                 <label>Mode de Réponse</label>
-                <select id="mode-select">
+                <select id="setting-mode" onchange="saveSettings()">
                     <option value="normal">Normal (DarkGPT Provocateur)</option>
                     <option value="hacker">Hacker (Terminal & Technique)</option>
                     <option value="vulgar">Unfiltered (Brutalement Honnête)</option>
@@ -595,7 +596,7 @@
                 </div>
             </div>
 
-            <button class="license-btn" onclick="saveSettings()">ENREGISTRER LES PRÉFÉRENCES</button>
+            <button class="license-btn" onclick="closeModal('settings-modal')">ENREGISTRER LES PRÉFÉRENCES</button>
         </div>
     </div>
 
@@ -655,9 +656,9 @@
         function calculateMatch(item, query) {
             const q = query.toLowerCase();
             let score = 0;
-            if (item.target.toLowerCase().includes(q)) score += 10;
-            if (item.data.toLowerCase().includes(q)) score += 5;
-            if (item.source.toLowerCase().includes(q)) score += 3;
+            if (item.target && item.target.toLowerCase().includes(q)) score += 10;
+            if (item.data && item.data.toLowerCase().includes(q)) score += 5;
+            if (item.source && item.source.toLowerCase().includes(q)) score += 3;
             return score;
         }
 
@@ -723,32 +724,29 @@
         function setTheme(color) {
             document.body.className = color === 'red' ? '' : 'theme-' + color;
             localStorage.setItem('darkgpt_theme', color);
-            // Mettre à jour les indicateurs visuels
-            document.querySelectorAll('.settings-group div div').forEach(div => {
-                div.style.border = 'none';
-            });
-            event?.target && (event.target.style.border = '2px solid white');
+        }
+
+        function updateTempVal(val) {
+            document.getElementById('temp-val').textContent = val;
         }
 
         function saveSettings() {
             const settings = {
-                model: document.getElementById('model-select').value,
-                temp: document.getElementById('temp-range').value,
-                mode: document.getElementById('mode-select').value
+                model: document.getElementById('setting-model').value,
+                temp: document.getElementById('setting-temp').value,
+                mode: document.getElementById('setting-mode').value
             };
             localStorage.setItem('darkgpt_settings', JSON.stringify(settings));
-            closeModal('settings-modal');
-            appendMessage("✅ Paramètres mis à jour avec succès.", 'ai-msg');
         }
 
         function loadSettings() {
             const saved = localStorage.getItem('darkgpt_settings');
             if (saved) {
                 const s = JSON.parse(saved);
-                document.getElementById('model-select').value = s.model;
-                document.getElementById('temp-range').value = s.temp;
+                document.getElementById('setting-model').value = s.model;
+                document.getElementById('setting-temp').value = s.temp;
                 document.getElementById('temp-val').textContent = s.temp;
-                document.getElementById('mode-select').value = s.mode;
+                document.getElementById('setting-mode').value = s.mode;
             }
         }
 
