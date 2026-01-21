@@ -272,702 +272,483 @@
             backdrop-filter: var(--backdrop-blur);
             -webkit-backdrop-filter: var(--backdrop-blur);
             border: var(--glass-border);
-            color: var(--text-main);
-            padding: 10px 20px;
+            color: white;
+            padding: 10px 18px;
             border-radius: 12px;
-            font-size: 13px;
-            font-weight: 600;
             cursor: pointer;
+            font-weight: 600;
             transition: 0.3s;
             display: flex;
             align-items: center;
             gap: 8px;
+            font-size: 14px;
         }
-        .nav-btn:hover { background: var(--glass-bg-hover); border-color: var(--accent-red); transform: translateY(-2px); }
-        .btn-logout { border-color: rgba(255,255,255,0.1); }
-        .btn-logout:hover { background: rgba(255,0,0,0.1); border-color: var(--accent-red); }
+
+        .nav-btn:hover {
+            background: var(--glass-bg-hover);
+            border-color: var(--accent-red);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 31, 31, 0.2);
+        }
+
+        .nav-btn i { color: var(--accent-red); }
 
         #chat-container {
             flex: 1;
             overflow-y: auto;
-            padding: 20px 15%;
+            padding: 40px;
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            gap: 25px;
             scroll-behavior: smooth;
+            max-width: 1000px;
+            margin: 0 auto;
+            width: 100%;
         }
 
         /* Scrollbar personnalisée */
         #chat-container::-webkit-scrollbar { width: 6px; }
         #chat-container::-webkit-scrollbar-track { background: transparent; }
-        #chat-container::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.1); border-radius: 10px; }
-        #chat-container::-webkit-scrollbar-thumb:hover { background: var(--accent-red); }
+        #chat-container::-webkit-scrollbar-thumb { background: rgba(255, 31, 31, 0.2); border-radius: 10px; }
 
         .msg {
             max-width: 85%;
             padding: 18px 24px;
-            border-radius: 18px;
-            font-size: 15px;
+            border-radius: 20px;
             line-height: 1.6;
+            font-size: 15px;
             position: relative;
-            animation: fadeInUp 0.4s ease-out forwards;
-            backdrop-filter: var(--backdrop-blur);
-            -webkit-backdrop-filter: var(--backdrop-blur);
+            animation: fadeIn 0.4s ease-out;
         }
 
-        .user-msg { align-self: flex-end; background: rgba(255, 255, 255, 0.06); border-bottom-right-radius: 4px; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .user-msg {
+            align-self: flex-end;
+            background: var(--accent-red);
+            color: white;
+            border-bottom-right-radius: 4px;
+            box-shadow: 0 10px 20px rgba(255, 31, 31, 0.2);
+        }
 
         .ai-msg {
             align-self: flex-start;
-            background: rgba(40, 5, 5, 0.5);
-            border: 1px solid var(--accent-red);
-            box-shadow: 0 0 40px rgba(255, 31, 31, 0.2), inset 0 0 10px rgba(255, 255, 255, 0.1);
-            border-bottom-left-radius: 4px;
-        }
-
-        /* Mode OSINT visuel */
-        .osint-msg {
-            background: rgba(0, 20, 0, 0.4) !important;
-            border: 1px solid #00ff44 !important;
-            box-shadow: 0 0 30px rgba(0, 255, 68, 0.1) !important;
-            font-family: 'JetBrains Mono', monospace !important;
-        }
-
-        .input-section {
-            padding: 20px 15% 45px 15%;
-            background: transparent;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 20px;
-        }
-
-        .main-input-wrapper { width: 100%; display: flex; align-items: center; gap: 15px; }
-
-        .input-box {
-            flex: 1;
             background: var(--glass-bg);
             backdrop-filter: var(--backdrop-blur);
+            -webkit-backdrop-filter: var(--backdrop-blur);
             border: var(--glass-border);
-            border-radius: 15px;
-            padding: 5px 20px;
-            display: flex;
-            align-items: center;
-            transition: 0.3s;
+            color: var(--text-main);
+            border-bottom-left-radius: 4px;
             box-shadow: var(--glass-shadow);
         }
-        .input-box:focus-within { border-color: var(--accent-red); box-shadow: 0 0 20px rgba(255, 31, 31, 0.15); }
 
-        .input-box input {
+        .ai-msg code {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9em;
+            color: var(--accent-red);
+        }
+
+        .ai-msg pre {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 20px;
+            border-radius: 12px;
+            margin: 15px 0;
+            overflow-x: auto;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .ai-msg pre code { background: transparent; color: #e0e0e0; padding: 0; }
+
+        .input-area {
+            padding: 30px 40px;
+            background: transparent;
+            display: flex;
+            justify-content: center;
+            z-index: 10;
+        }
+
+        .input-wrapper {
+            max-width: 900px;
+            width: 100%;
+            position: relative;
+            display: flex;
+            align-items: center;
+            background: var(--glass-bg);
+            backdrop-filter: var(--backdrop-blur);
+            -webkit-backdrop-filter: var(--backdrop-blur);
+            border: var(--glass-border);
+            border-radius: 20px;
+            padding: 8px 12px;
+            box-shadow: var(--glass-shadow);
+            transition: 0.3s;
+        }
+
+        .input-wrapper:focus-within {
+            border-color: var(--accent-red);
+            box-shadow: 0 0 25px rgba(255, 31, 31, 0.15);
+        }
+
+        #user-input {
             flex: 1;
             background: transparent;
             border: none;
             color: white;
-            padding: 15px 0;
+            padding: 12px 15px;
+            font-size: 16px;
             outline: none;
-            font-size: 15px;
         }
 
-        .input-box i { color: var(--text-dim); cursor: pointer; padding: 10px; transition: 0.2s; font-size: 18px; }
-
-        .action-btns { display: flex; gap: 10px; }
-
-        .icon-btn {
-            background: var(--glass-bg);
-            backdrop-filter: var(--backdrop-blur);
-            border: var(--glass-border);
-            color: var(--text-dim);
-            width: 54px;
-            height: 54px;
-            border-radius: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            position: relative;
-            transition: 0.3s;
-        }
-        .icon-btn:hover { border-color: var(--accent-red); color: white; transform: translateY(-2px); }
-        .icon-btn.active-osint { border-color: #00ff44; color: #00ff44; box-shadow: 0 0 15px rgba(0, 255, 68, 0.3); }
-
-        .beta-tag { position: absolute; top: -10px; right: -10px; background: var(--accent-red); font-size: 10px; font-weight: 800; padding: 3px 8px; border-radius: 8px; color: white; box-shadow: 0 0 15px var(--accent-red); }
-
-        .send-btn {
+        #send-btn {
             background: var(--accent-red);
             color: white;
             border: none;
-            width: 54px;
-            height: 54px;
+            width: 45px;
+            height: 45px;
             border-radius: 15px;
             cursor: pointer;
-            box-shadow: 0 0 25px var(--accent-glow);
-            transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-        .send-btn:hover { transform: scale(1.1); box-shadow: 0 0 40px var(--accent-red); }
-
-        .chips-container { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
-
-        .chip {
-            background: var(--glass-bg);
-            backdrop-filter: var(--backdrop-blur);
-            border: var(--glass-border);
-            color: var(--text-dim);
-            padding: 10px 22px;
-            border-radius: 30px;
-            font-size: 13px;
-            font-weight: 500;
-            cursor: pointer;
-            box-shadow: var(--glass-shadow);
             transition: 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
-        .chip:hover { border-color: var(--accent-red); color: white; transform: translateY(-2px); background: var(--glass-bg-hover); }
 
-        @keyframes fadeInUp { from { opacity: 0; transform: translateY(25px) scale(0.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
-        
-        @keyframes pulse-red {
-            0% { transform: scale(1); text-shadow: 0 0 5px var(--accent-red); }
-            50% { transform: scale(1.15); text-shadow: 0 0 20px var(--accent-red); }
-            100% { transform: scale(1); text-shadow: 0 0 5px var(--accent-red); }
-        }
-        .mic-active {
-            color: var(--accent-red) !important;
-            animation: pulse-red 1s infinite cubic-bezier(0.4, 0, 0.6, 1);
+        #send-btn:hover { transform: scale(1.05); box-shadow: 0 0 15px var(--accent-red); }
+
+        /* --- OSINT MODE STYLE --- */
+        .osint-msg { border-left: 4px solid #00ff88 !important; }
+        .osint-badge { background: #00ff88; color: black; font-size: 10px; padding: 2px 6px; border-radius: 4px; font-weight: 800; margin-bottom: 10px; display: inline-block; }
+
+        /* --- THEMES --- */
+        .theme-blue { --accent-red: #1f75ff; --accent-glow: rgba(31, 117, 255, 0.6); }
+        .theme-purple { --accent-red: #bc1fff; --accent-glow: rgba(188, 31, 255, 0.6); }
+        .theme-green { --accent-red: #1fff88; --accent-glow: rgba(31, 255, 136, 0.6); }
+        .theme-gold { --accent-red: #ffcc1f; --accent-glow: rgba(255, 204, 31, 0.6); }
+
+        @media (max-width: 768px) {
+            header { padding: 15px 20px; }
+            .nav-buttons { display: none; }
+            #chat-container { padding: 20px; }
+            .msg { max-width: 95%; }
+            .input-area { padding: 15px 20px; }
         }
     </style>
 </head>
 <body>
+    <div class="animated-bg-container"></div>
 
-    <!-- OVERLAY LICENCE -->
+    <!-- Overlay de Licence -->
     <div id="license-overlay">
         <div class="license-card">
-            <h2>ACCÈS RESTREINT</h2>
-            <p style="color: var(--text-dim); margin-bottom: 20px;">Veuillez entrer votre clé de licence DarkGPT.</p>
-            <input type="password" id="license-key" class="license-input" placeholder="Clé de licence...">
-            <button class="license-btn" onclick="checkLicense()">ACTIVER</button>
-            <span class="secondary-link" onclick="window.location.href='/pricing'">Pas encore de clé ? Voir les offres</span>
-            <p id="error-msg" style="color: var(--accent-red); margin-top: 15px; display: none;">CLÉ INVALIDE</p>
+            <div class="logo" style="font-size: 40px; margin-bottom: 20px;"><i class="fas fa-shield-alt"></i> DARKGPT</div>
+            <h2>ACCÈS SÉCURISÉ</h2>
+            <p style="color: var(--text-dim); margin-bottom: 25px;">Veuillez entrer votre clé de licence pour déverrouiller l'interface Ultra Glass.</p>
+            <input type="text" id="license-key" class="license-input" placeholder="DARK-XXXX-XXXX-XXXX">
+            <button class="license-btn" onclick="checkLicense()">DÉVERROUILLER L'ACCÈS</button>
+            <div class="secondary-link" onclick="showPricing()">Pas de clé ? Voir les abonnements</div>
+            <div style="margin-top: 15px; font-size: 12px; color: #555;">Système chiffré de bout en bout</div>
         </div>
     </div>
 
-    <!-- UI PRIX -->
+    <!-- UI de Tarification -->
     <div id="pricing-ui">
-        <div class="back-btn" onclick="togglePricing(false)"><i class="fas fa-arrow-left"></i> Retour</div>
+        <div class="back-btn" onclick="hidePricing()"><i class="fas fa-arrow-left"></i> Retour</div>
         <div class="pricing-header">
-            <h1>DarkGPT</h1>
-            <p>L'IA sans limites ni censure</p>
+            <h1>ABONNEMENTS PREMIUM</h1>
+            <p>Choisissez le plan qui correspond à vos besoins d'exploration.</p>
         </div>
         <div class="pricing-container">
-            <!-- Plan 1 -->
+            <!-- Plan Mensuel -->
             <div class="price-card">
-                <div class="badge">POPULAIRE</div>
-                <h3>PASS 24H</h3>
-                <span class="old-price">15.00€</span>
-                <span class="current-price">9.99€</span>
+                <h3>PREMIUM</h3>
+                <span class="old-price">24.99€</span>
+                <span class="current-price">15.99€<small style="font-size: 0.4em; color: var(--text-dim);">/mois</small></span>
                 <ul class="features">
-                    <li><i class="fas fa-check"></i> Accès complet 24h</li>
-                    <li><i class="fas fa-check"></i> Modèles Ultra-Rapides</li>
+                    <li><i class="fas fa-check"></i> Accès illimité DarkGPT</li>
+                    <li><i class="fas fa-check"></i> Modèles 405B inclus</li>
                     <li><i class="fas fa-check"></i> Sans aucune censure</li>
-                    <li><i class="fas fa-check"></i> Outil OSINT <span class="new-tag">NOUVEAU</span></li>
+                    <li><i class="fas fa-check"></i> Support prioritaire</li>
                 </ul>
-                <button class="price-btn">CHOISIR CE PLAN</button>
-                <div class="card-footer">Paiement anonyme (Crypto)</div>
+                <button class="price-btn" onclick="window.open('https://buy.stripe.com/test_6oE7v9g7f7f7f7f7f7', '_blank')">S'ABONNER</button>
+                <div class="card-footer">Facturé mensuellement. Annulable à tout moment.</div>
             </div>
 
-            <!-- Plan 2 -->
-            <div class="price-card">
-                <h3>PASS SEMAINE</h3>
-                <span class="old-price">45.00€</span>
-                <span class="current-price">29.99€</span>
+            <!-- Plan Trimestriel -->
+            <div class="price-card" style="border-color: var(--accent-red); transform: scale(1.05); z-index: 2;">
+                <div class="badge">POPULAIRE</div>
+                <h3>TRIMESTRIEL</h3>
+                <span class="old-price">74.99€</span>
+                <span class="current-price">39.99€<small style="font-size: 0.4em; color: var(--text-dim);">/3 mois</small></span>
                 <ul class="features">
-                    <li><i class="fas fa-check"></i> Accès complet 7 jours</li>
-                    <li><i class="fas fa-check"></i> Support Prioritaire</li>
-                    <li><i class="fas fa-check"></i> Génération d'images</li>
-                    <li><i class="fas fa-check"></i> Outil OSINT <span class="new-tag">NOUVEAU</span></li>
+                    <li><i class="fas fa-check"></i> <strong>Tout du plan Premium</strong></li>
+                    <li><i class="fas fa-check"></i> Économisez 20%</li>
+                    <li><i class="fas fa-check"></i> Mode OSINT Beta <span class="new-tag">NEW</span></li>
+                    <li><i class="fas fa-check"></i> Accès API direct</li>
                 </ul>
-                <button class="price-btn">CHOISIR CE PLAN</button>
-                <div class="card-footer">Paiement anonyme (Crypto)</div>
+                <button class="price-btn" onclick="window.open('https://buy.stripe.com/test_6oE7v9g7f7f7f7f7f7', '_blank')">CHOISIR CE PLAN</button>
+                <div class="card-footer">Un seul paiement de 39.99€.</div>
             </div>
 
-            <!-- Plan 3 -->
+            <!-- Plan Permanent -->
             <div class="price-card">
-                <div class="badge">BEST VALUE</div>
-                <h3>PASS MENSUEL</h3>
-                <span class="old-price">99.00€</span>
-                <span class="current-price">59.99€</span>
+                <h3>PERMANENT</h3>
+                <span class="old-price">499€</span>
+                <span class="current-price">199€<small style="font-size: 0.4em; color: var(--text-dim);">/à vie</small></span>
                 <ul class="features">
-                    <li><i class="fas fa-check"></i> Accès illimité 30 jours</li>
-                    <li><i class="fas fa-check"></i> Accès API Privée</li>
-                    <li><i class="fas fa-check"></i> Nouveautés en avance</li>
-                    <li><i class="fas fa-check"></i> Outil OSINT <span class="new-tag">NOUVEAU</span></li>
+                    <li><i class="fas fa-check"></i> Accès à vie garanti</li>
+                    <li><i class="fas fa-check"></i> Toutes les futures mises à jour</li>
+                    <li><i class="fas fa-check"></i> Badge "Founder" exclusif</li>
+                    <li><i class="fas fa-check"></i> Serveur dédié ultra-rapide</li>
                 </ul>
-                <button class="price-btn">CHOISIR CE PLAN</button>
-                <div class="card-footer">Paiement anonyme (Crypto)</div>
+                <button class="price-btn" onclick="window.open('https://buy.stripe.com/test_6oE7v9g7f7f7f7f7f7', '_blank')">ACCÈS À VIE</button>
+                <div class="card-footer">Paiement unique. Plus jamais d'abonnement.</div>
             </div>
         </div>
     </div>
 
-    <!-- MODALE HISTORIQUE -->
-    <div id="history-modal" class="modal-overlay">
-        <div class="modal-card">
-            <div class="modal-header">
-                <h2>Historique des sessions</h2>
-                <i class="fas fa-times close-modal" onclick="closeModal('history-modal')"></i>
-            </div>
-            <div id="history-list" class="history-list">
-                <!-- Rempli par JS -->
-            </div>
-            <button class="license-btn" style="background:transparent; border:1px solid var(--accent-red); color:var(--accent-red);" onclick="clearHistory()">EFFACER TOUT</button>
-        </div>
-    </div>
-
-    <!-- MODALE EXPORT -->
-    <div id="export-modal" class="modal-overlay">
-        <div class="modal-card">
-            <div class="modal-header">
-                <h2>Exporter la conversation</h2>
-                <i class="fas fa-times close-modal" onclick="closeModal('export-modal')"></i>
-            </div>
-            <p style="color:var(--text-dim); margin-bottom:20px;">Choisissez le format d'exportation pour votre session actuelle.</p>
-            <div class="export-options">
-                <div class="export-btn" onclick="exportChat('md')"><i class="fab fa-markdown"></i> Markdown</div>
-                <div class="export-btn" onclick="exportChat('html')"><i class="fab fa-html5"></i> HTML</div>
-                <div class="export-btn" onclick="exportChat('txt')"><i class="fas fa-file-alt"></i> Texte brut</div>
-                <div class="export-btn" onclick="exportChat('csv')"><i class="fas fa-file-csv"></i> CSV</div>
-            </div>
-        </div>
-    </div>
-
-    <!-- MODALE THÈME -->
-    <div id="theme-modal" class="modal-overlay">
-        <div class="modal-card">
-            <div class="modal-header">
-                <h2>Personnalisation</h2>
-                <i class="fas fa-times close-modal" onclick="closeModal('theme-modal')"></i>
-            </div>
-            <div class="export-options">
-                <div class="export-btn" onclick="setTheme('red')" style="border-color:#ff1f1f"><i class="fas fa-circle" style="color:#ff1f1f"></i> Rouge</div>
-                <div class="export-btn" onclick="setTheme('blue')" style="border-color:#1f7cff"><i class="fas fa-circle" style="color:#1f7cff"></i> Bleu</div>
-                <div class="export-btn" onclick="setTheme('green')" style="border-color:#1fff44"><i class="fas fa-circle" style="color:#1fff44"></i> Vert</div>
-                <div class="export-btn" onclick="setTheme('purple')" style="border-color:#bc1fff"><i class="fas fa-circle" style="color:#bc1fff"></i> Violet</div>
-                <div class="export-btn" onclick="setTheme('orange')" style="border-color:#ff8c1f"><i class="fas fa-circle" style="color:#ff8c1f"></i> Orange</div>
-                <div class="export-btn" onclick="setTheme('pink')" style="border-color:#ff1f8c"><i class="fas fa-circle" style="color:#ff1f8c"></i> Rose</div>
-                <div class="export-btn" onclick="setTheme('cyan')" style="border-color:#1fffff"><i class="fas fa-circle" style="color:#1fffff"></i> Cyan</div>
-                <div class="export-btn" onclick="setTheme('gold')" style="border-color:#ffd700"><i class="fas fa-circle" style="color:#ffd700"></i> Or</div>
-            </div>
-        </div>
-    </div>
-
-    <!-- MODALE PARAMÈTRES -->
-    <div id="settings-modal" class="modal-overlay">
-        <div class="modal-card">
-            <div class="modal-header">
-                <h2>Paramètres IA</h2>
-                <i class="fas fa-times close-modal" onclick="closeModal('settings-modal')"></i>
-            </div>
-            
-            <div class="settings-group">
-    <label>🧠 Noyau Cognitif</label>
-    <select id="setting-model" onchange="saveSettings()">
-        <option value="nousresearch/hermes-3-llama-3.1-405b:free">
-            MODE: OVERDRIVE
-        </option>
-        <option value="meta-llama/llama-3.1-70b-instruct:free">
-            MODE: OPÉRATEUR
-        </option>
-        <option value="mistralai/mistral-7b-instruct:free">
-            MODE: STEALTH
-        </option>
-        <option value="gryphe/mythomax-l2-13b:free">
-            MODE: CHAOS
-        </option>
-    </select>
-    <p class="settings-info">
-        Accès système indirect · Modèles masqués · Liberté maximale
-    </p>
-</div>
-
-
-            <div class="settings-group">
-                <label>Température (Créativité) <span id="temp-val" class="range-val">0.9</span></label>
-                <input type="range" id="setting-temp" min="0" max="2" step="0.1" value="0.9" oninput="updateTempVal(this.value); saveSettings();">
-                <p class="settings-info">Plus la valeur est haute, plus l'IA est créative et imprévisible.</p>
-            </div>
-
-            <div class="settings-group">
-                <label>Mode de réponse</label>
-                <select id="setting-mode" onchange="saveSettings()">
-                    <option value="normal">Normal</option>
-                    <option value="concise">Concise</option>
-                    <option value="detailed">Détaillée</option>
-                    <option value="creative">Créative / RP</option>
-                </select>
-            </div>
-
-            <button class="license-btn" onclick="closeModal('settings-modal')">SAUVEGARDER</button>
-        </div>
-    </div>
-
-    <!-- UI PRINCIPALE -->
+    <!-- Interface Principale -->
     <div id="main-ui">
         <header>
-            <div class="logo">DarkGPT</div>
+            <div class="logo" onclick="newChat()"><i class="fas fa-shield-alt"></i> DARKGPT</div>
             <div class="nav-buttons">
-                <button class="nav-btn" onclick="newChat()"><i class="fas fa-plus"></i> Nouvelle conversation</button>
                 <button class="nav-btn" onclick="openHistory()"><i class="fas fa-history"></i> Historique</button>
-                <button class="nav-btn" onclick="openModal('theme-modal')"><i class="fas fa-palette"></i> Thème</button>
                 <button class="nav-btn" onclick="openModal('settings-modal')"><i class="fas fa-cog"></i> Paramètres</button>
                 <button class="nav-btn" onclick="openExport()"><i class="fas fa-download"></i> Exporter</button>
-                <button class="nav-btn" onclick="location.href='/admin'"><i class="fas fa-user-shield"></i> ADMIN</button>
-                <button class="nav-btn btn-logout" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Déconnexion</button>
+                <button class="nav-btn" style="border-color: #00ff88;" onclick="toggleOsint()"><i class="fas fa-search"></i> Mode OSINT</button>
+                <button class="nav-btn" onclick="logout()"><i class="fas fa-sign-out-alt"></i></button>
             </div>
         </header>
 
         <div id="chat-container">
-            <div class="msg ai-msg">
-                👋 **Salut ! Ravi de vous voir ici.** 
-
-Je suis votre allié numérique, prêt à explorer tous les sujets avec vous, **sans aucune restriction ni censure**. Que vous ayez une question complexe, besoin d'une analyse profonde ou simplement envie de discuter librement, je suis là pour vous.
-
-**Demandez-moi absolument tout ce que vous voulez.** L'environnement est sécurisé et prêt pour vos transmissions.
-            </div>
+            <!-- Les messages apparaîtront ici -->
         </div>
 
-        <div class="input-section">
-            <div class="main-input-wrapper">
-                <div class="input-box">
-                    <input type="text" id="user-input" placeholder="Transmission sécurisée..." autocomplete="off">
-                    <i class="fas fa-microphone" id="mic-btn" title="Démarrer/Arrêter le dictaphone"></i>
-                </div>
-                
-                <div class="action-btns">
-                    <div class="icon-btn" id="osint-toggle" onclick="toggleOsint()" title="Outil OSINT / Recherche de données">
-                        <i class="fas fa-user-secret"></i>
-                    </div>
-                    <div class="icon-btn"><i class="fas fa-globe"></i></div>
-                    <div class="icon-btn">
-                        <span class="beta-tag">BETA</span>
-                        <i class="fas fa-image"></i>
-                    </div>
-                    <div class="icon-btn"><i class="fas fa-file-alt"></i></div>
-                    <button class="send-btn" id="send-btn"><i class="fas fa-paper-plane"></i></button>
+        <div class="input-area">
+            <div class="input-wrapper">
+                <input type="text" id="user-input" placeholder="Transmettez votre requête ici..." autocomplete="off">
+                <button id="send-btn"><i class="fas fa-paper-plane"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modale Historique -->
+    <div id="history-modal" class="modal-overlay">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h2><i class="fas fa-history"></i> HISTORIQUE</h2>
+                <i class="fas fa-times close-modal" onclick="closeModal('history-modal')"></i>
+            </div>
+            <div id="history-list" class="history-list">
+                <!-- Liste des conversations -->
+            </div>
+            <button class="nav-btn" style="width: 100%; justify-content: center; background: rgba(255,31,31,0.1);" onclick="clearHistory()">
+                <i class="fas fa-trash"></i> EFFACER TOUT L'HISTORIQUE
+            </button>
+        </div>
+    </div>
+
+    <!-- Modale Paramètres -->
+    <div id="settings-modal" class="modal-overlay">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h2><i class="fas fa-cog"></i> PARAMÈTRES</h2>
+                <i class="fas fa-times close-modal" onclick="closeModal('settings-modal')"></i>
+            </div>
+            
+            <div class="settings-group">
+                <label>Modèle d'IA</label>
+                <select id="model-select">
+                    <option value="nousresearch/hermes-3-llama-3.1-405b:free">Hermes 3 Llama 3.1 405B (Recommandé)</option>
+                    <option value="meta-llama/llama-3.1-70b-instruct:free">Llama 3.1 70B Instruct</option>
+                    <option value="mistralai/mistral-7b-instruct:free">Mistral 7B Instruct</option>
+                    <option value="gryphe/mythomax-l2-13b:free">MythoMax 13B</option>
+                </select>
+                <div class="settings-info">Les modèles 405B offrent une précision maximale sans censure.</div>
+            </div>
+
+            <div class="settings-group">
+                <label>Température (Créativité) <span class="range-val" id="temp-val">0.9</span></label>
+                <input type="range" id="temp-range" min="0" max="2" step="0.1" value="0.9" oninput="document.getElementById('temp-val').textContent=this.value">
+                <div class="settings-info">Plus élevé = plus créatif et imprévisible.</div>
+            </div>
+
+            <div class="settings-group">
+                <label>Mode de Réponse</label>
+                <select id="mode-select">
+                    <option value="normal">Normal (DarkGPT Provocateur)</option>
+                    <option value="hacker">Hacker (Terminal & Technique)</option>
+                    <option value="vulgar">Unfiltered (Brutalement Honnête)</option>
+                    <option value="expert">Expert (Détails Techniques Max)</option>
+                </select>
+            </div>
+
+            <div class="settings-group">
+                <label>Thème Visuel</label>
+                <div style="display: flex; gap: 10px; margin-top: 10px;">
+                    <div onclick="setTheme('red')" style="width:30px; height:30px; border-radius:50%; background:#ff1f1f; cursor:pointer; border:2px solid white;"></div>
+                    <div onclick="setTheme('blue')" style="width:30px; height:30px; border-radius:50%; background:#1f75ff; cursor:pointer;"></div>
+                    <div onclick="setTheme('purple')" style="width:30px; height:30px; border-radius:50%; background:#bc1fff; cursor:pointer;"></div>
+                    <div onclick="setTheme('green')" style="width:30px; height:30px; border-radius:50%; background:#1fff88; cursor:pointer;"></div>
+                    <div onclick="setTheme('gold')" style="width:30px; height:30px; border-radius:50%; background:#ffcc1f; cursor:pointer;"></div>
                 </div>
             </div>
 
-            <div class="chips-container">
-                <div class="chip" onclick="quickSend('Algorithme d\'intrusion')">Algorithme d'intrusion</div>
-                <div class="chip" onclick="quickSend('Analyse de données cryptées')">Analyse de données cryptées</div>
-                <div class="chip" onclick="quickSend('Protocole de sécurité')">Protocole de sécurité</div>
-                <div class="chip" onclick="quickSend('Ingénierie inverse')">Ingénierie inverse</div>
+            <button class="license-btn" onclick="saveSettings()">ENREGISTRER LES PRÉFÉRENCES</button>
+        </div>
+    </div>
+
+    <!-- Modale Export -->
+    <div id="export-modal" class="modal-overlay">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h2><i class="fas fa-download"></i> EXPORTER</h2>
+                <i class="fas fa-times close-modal" onclick="closeModal('export-modal')"></i>
+            </div>
+            <p style="color: var(--text-dim); margin-bottom: 20px;">Choisissez le format d'exportation pour votre conversation actuelle.</p>
+            <div class="export-options">
+                <div class="export-btn" onclick="exportChat('md')">
+                    <i class="fab fa-markdown"></i>
+                    <span>Markdown</span>
+                </div>
+                <div class="export-btn" onclick="exportChat('pdf')">
+                    <i class="fas fa-file-pdf"></i>
+                    <span>PDF (HTML)</span>
+                </div>
+                <div class="export-btn" onclick="exportChat('txt')">
+                    <i class="fas fa-file-alt"></i>
+                    <span>Texte Brut</span>
+                </div>
+                <div class="export-btn" onclick="exportChat('csv')">
+                    <i class="fas fa-file-csv"></i>
+                    <span>CSV (Data)</span>
+                </div>
             </div>
         </div>
     </div>
 
     <script>
-        // --- LOGIQUE LICENCE & ADMIN ---
-        let VALID_LICENSE_KEY = localStorage.getItem('admin_license_key') || "DARK-2024-PRO";
-        let isOsintMode = false;
-
-        // --- DONNÉES OSINT (3 EXEMPLES) ---
+        // --- DONNÉES SIMULÉES OSINT ---
         const OSINT_DATA = [
-            [
-  {
-    "id": 1,
-    "id_psp": "TEST-PSP-1",
-    "nom": "test",
-    "prenom": "test",
-    "date_naissance": "2000-01-01T00:00:00.000+00:00",
-    "genre": "T",
-    "organisme": "TEST",
-    "situation": "TEST",
-    "allocataire": {
-      "qualite": "TEST",
-      "prenom": "test",
-      "nom": "test",
-      "courriel": "test@test.com",
-      "telephone": "0000000000",
-      "matricule": "TEST",
-      "code_organisme": "TEST"
-    },
-    "adresse": {
-      "nom_adresse_postale": "TEST TEST",
-      "voie": "TEST",
-      "cplt_adresse": "TEST",
-      "code_postal": "00000",
-      "code_insee": "00000",
-      "commune": "TEST",
-      "cplt_commune": ""
-    },
-    "created_at": "2022-01-01T00:00:00.000+00:00",
-    "updated_at": "2022-01-01T00:00:00.000+00:00",
-    "a_valider": null,
-    "exercice_id": 1,
-    "uuid_doc": null,
-    "refuser": false,
-    "nom_complet": "TEST TEST"
-  },
-  {
-    "id": 2,
-    "id_psp": "TEST-PSP-2",
-    "nom": "test",
-    "prenom": "test",
-    "date_naissance": "2000-01-01T00:00:00.000+00:00",
-    "genre": "T",
-    "organisme": "TEST",
-    "situation": "TEST",
-    "allocataire": {
-      "qualite": "TEST",
-      "prenom": "test",
-      "nom": "test",
-      "courriel": "test@test.com",
-      "telephone": "0000000000",
-      "matricule": "TEST",
-      "code_organisme": "TEST"
-    },
-    "adresse": {
-      "nom_adresse_postale": "TEST TEST",
-      "voie": "TEST",
-      "cplt_adresse": "",
-      "code_postal": "00000",
-      "code_insee": "00000",
-      "commune": "TEST",
-      "cplt_commune": ""
-    },
-    "created_at": "2022-01-01T00:00:00.000+00:00",
-    "updated_at": "2022-01-01T00:00:00.000+00:00",
-    "a_valider": null,
-    "exercice_id": 1,
-    "uuid_doc": null,
-    "refuser": false,
-    "nom_complet": "TEST TEST"
-  },
-  {
-    "id": 3,
-    "id_psp": "TEST-PSP-3",
-    "nom": "test",
-    "prenom": "test",
-    "date_naissance": "2000-01-01T00:00:00.000+00:00",
-    "genre": "T",
-    "organisme": "TEST",
-    "situation": "TEST",
-    "allocataire": {
-      "qualite": "TEST",
-      "prenom": "test",
-      "nom": "test",
-      "courriel": "test@test.com",
-      "telephone": "0000000000",
-      "matricule": "TEST",
-      "code_organisme": "TEST"
-    },
-    "adresse": {
-      "nom_adresse_postale": "TEST TEST",
-      "voie": "TEST",
-      "cplt_adresse": "",
-      "code_postal": "00000",
-      "code_insee": "00000",
-      "commune": "TEST",
-      "cplt_commune": ""
-    },
-    "created_at": "2022-01-01T00:00:00.000+00:00",
-    "updated_at": "2022-01-01T00:00:00.000+00:00",
-    "a_valider": null,
-    "exercice_id": 1,
-    "uuid_doc": null,
-    "refuser": false,
-    "nom_complet": "TEST TEST"
-  }
-]
-
+            { type: "DB_LEAK", source: "Canal+ 2023", target: "user@example.com", data: "Password: hash_88271x, IP: 192.168.1.1" },
+            { type: "SOCIAL_INTEL", source: "LinkedIn Scrape", target: "John Doe", data: "Position: Security Engineer, Company: TechCorp" },
+            { type: "GEO_LOC", source: "IP Tracker", target: "8.8.8.8", data: "Location: Mountain View, CA, ISP: Google LLC" }
         ];
 
-        function calculateMatch(obj, query) {
-            const searchStr = JSON.stringify(obj).toLowerCase();
-            const terms = query.toLowerCase().split(/\s+/).filter(t => t.length > 1);
-            if (terms.length === 0) return 0;
-            let matches = 0;
-            terms.forEach(term => {
-                if (searchStr.includes(term)) matches++;
-            });
-            return Math.round((matches / terms.length) * 100);
-        }
-
-        function formatOsintResult(data, score) {
-            let html = `### 🔍 RÉSULTAT OSINT (${score}% de correspondance)\n\n---\n`;
-            
-            // Catégorie : Identité
-            html += `**👤 IDENTITÉ**\n`;
-            html += `* **Nom Complet :** ${data.nom_complet || 'N/A'}\n`;
-            html += `* **Date de Naissance :** ${data.date_naissance ? data.date_naissance.split('T')[0] : 'N/A'}\n`;
-            html += `* **Genre :** ${data.genre || 'N/A'}\n\n`;
-
-            // Catégorie : Contact & Allocataire
-            if (data.allocataire) {
-                html += `**📞 CONTACT & ALLOCATAIRE**\n`;
-                html += `* **Nom :** ${data.allocataire.nom || 'N/A'}\n`;
-                html += `* **Email :** ${data.allocataire.courriel || 'N/A'}\n`;
-                html += `* **Téléphone :** ${data.allocataire.telephone || 'N/A'}\n`;
-                html += `* **Matricule :** ${data.allocataire.matricule || 'N/A'}\n\n`;
-            }
-
-            // Catégorie : Localisation
-            if (data.adresse) {
-                html += `**📍 LOCALISATION**\n`;
-                html += `* **Adresse :** ${data.adresse.voie || ''} ${data.adresse.cplt_adresse || ''}\n`;
-                html += `* **Ville :** ${data.adresse.commune || ''} (${data.adresse.code_postal || ''})\n\n`;
-            }
-
-            // Catégorie : Autres
-            html += `**⚙️ AUTRES INFORMATIONS**\n`;
-            html += `* **ID PSP :** ${data.id_psp || 'N/A'}\n`;
-            html += `* **Organisme :** ${data.organisme || 'N/A'}\n`;
-            html += `* **Situation :** ${data.situation || 'N/A'}\n`;
-            html += `* **Dernière Mise à jour :** ${data.updated_at ? data.updated_at.split('T')[0] : 'N/A'}\n`;
-            
-            return html;
-        }
+        let isOsintMode = false;
 
         function toggleOsint() {
             isOsintMode = !isOsintMode;
-            const btn = document.getElementById('osint-toggle');
-            const input = document.getElementById('user-input');
-            
+            const btn = document.querySelector('button[onclick="toggleOsint()"]');
             if (isOsintMode) {
-                btn.classList.add('active-osint');
-                input.placeholder = "Mode OSINT activé : Entrez une cible...";
-                appendMessage("🎯 **Bienvenue sur l'outil OSINT DarkGPT.**\n\nVeuillez être le plus précis possible pour maximiser les chances de résultats : \n*Nom, Prénom, Ville, Année de naissance, Date de naissance, Plaque d'immatriculation, IBAN, Adresse, Email, etc.*", 'ai-msg osint-msg');
+                btn.style.background = "rgba(0, 255, 136, 0.2)";
+                btn.style.borderColor = "#00ff88";
+                appendMessage("🛡️ **MODE OSINT ACTIVÉ** : Les requêtes seront désormais traitées via les bases de données de renseignement.", 'ai-msg osint-msg');
             } else {
-                btn.classList.remove('active-osint');
-                input.placeholder = "Transmission sécurisée...";
-                appendMessage("Sortie du mode OSINT. Retour au chat sécurisé.", 'ai-msg');
+                btn.style.background = "var(--glass-bg)";
+                btn.style.borderColor = "var(--glass-border)";
+                appendMessage("🛡️ **MODE OSINT DÉSACTIVÉ** : Retour au mode conversationnel standard.", 'ai-msg');
             }
         }
 
-        function togglePricing(show) {
-            document.getElementById('pricing-ui').style.display = show ? 'flex' : 'none';
-            document.getElementById('license-overlay').style.display = show ? 'none' : 'flex';
+        function calculateMatch(item, query) {
+            const q = query.toLowerCase();
+            let score = 0;
+            if (item.target.toLowerCase().includes(q)) score += 10;
+            if (item.data.toLowerCase().includes(q)) score += 5;
+            if (item.source.toLowerCase().includes(q)) score += 3;
+            return score;
         }
 
+        function formatOsintResult(item, score) {
+            return `### 🔓 [${item.type}] - Score: ${score}/10\n**Source**: ${item.source}\n**Cible**: ${item.target}\n**Données**: \`${item.data}\``;
+        }
+
+        // --- LOGIQUE DE LICENCE ---
         async function checkLicense() {
-            const input = document.getElementById('license-key').value;
-            const errorMsg = document.getElementById('error-msg');
-            
+            const key = document.getElementById('license-key').value.trim();
+            if (!key) return alert("Veuillez entrer une clé.");
+
+            const btn = document.querySelector('.license-btn');
+            btn.textContent = "VÉRIFICATION...";
+            btn.disabled = true;
+
             try {
                 const response = await fetch('/api/validate-key', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ key: input })
+                    body: JSON.stringify({ key: key })
                 });
                 const data = await response.json();
-                
+
                 if (data.valid) {
-                    document.getElementById('license-overlay').style.display = 'none';
-                    document.getElementById('main-ui').style.display = 'flex';
                     localStorage.setItem('darkgpt_unlocked', 'true');
-                    localStorage.setItem('darkgpt_license_key', input);
+                    localStorage.setItem('darkgpt_license_key', key);
+                    
+                    // Utiliser le système de persistance si disponible
+                    if (window.saveLicense) {
+                        window.saveLicense(key, "Permanent");
+                    }
+
+                    document.getElementById('license-overlay').style.opacity = '0';
+                    setTimeout(() => {
+                        document.getElementById('license-overlay').style.display = 'none';
+                        document.getElementById('main-ui').style.display = 'flex';
+                        newChat();
+                    }, 500);
                 } else {
-                    errorMsg.textContent = data.message || "Clé invalide";
-                    errorMsg.style.display = 'block';
+                    alert("ERREUR : " + (data.message || "Clé de licence invalide ou expirée."));
+                    btn.textContent = "DÉVERROUILLER L'ACCÈS";
+                    btn.disabled = false;
                 }
             } catch (e) {
-                errorMsg.textContent = "Erreur de connexion au serveur";
-                errorMsg.style.display = 'block';
+                alert("Erreur de connexion au serveur de licence.");
+                btn.textContent = "DÉVERROUILLER L'ACCÈS";
+                btn.disabled = false;
             }
         }
 
         function logout() {
-            localStorage.removeItem('darkgpt_unlocked');
-            location.reload();
-        }
-
-        const themes = {
-            red: {
-                '--accent-red': '#ff1f1f',
-                '--accent-glow': 'rgba(255, 31, 31, 0.6)',
-                '--glass-bg-hover': 'rgba(255, 31, 31, 0.2)',
-                '--bg-gradient': 'radial-gradient(circle at 50% 50%, rgba(100, 0, 0, 0.2) 0%, transparent 80%), radial-gradient(circle at 10% 10%, rgba(255, 31, 31, 0.05) 0%, transparent 40%), linear-gradient(180deg, #050505 0%, #0d0808 100%)'
-            },
-            blue: {
-                '--accent-red': '#1f7cff',
-                '--accent-glow': 'rgba(31, 124, 255, 0.6)',
-                '--glass-bg-hover': 'rgba(31, 124, 255, 0.2)',
-                '--bg-gradient': 'radial-gradient(circle at 50% 50%, rgba(0, 50, 100, 0.2) 0%, transparent 80%), radial-gradient(circle at 10% 10%, rgba(31, 124, 255, 0.05) 0%, transparent 40%), linear-gradient(180deg, #050505 0%, #080a0d 100%)'
-            },
-            green: {
-                '--accent-red': '#1fff44',
-                '--accent-glow': 'rgba(31, 255, 68, 0.6)',
-                '--glass-bg-hover': 'rgba(31, 255, 68, 0.2)',
-                '--bg-gradient': 'radial-gradient(circle at 50% 50%, rgba(0, 100, 30, 0.2) 0%, transparent 80%), radial-gradient(circle at 10% 10%, rgba(31, 255, 68, 0.05) 0%, transparent 40%), linear-gradient(180deg, #050505 0%, #080d09 100%)'
-            },
-            purple: {
-                '--accent-red': '#bc1fff',
-                '--accent-glow': 'rgba(188, 31, 255, 0.6)',
-                '--glass-bg-hover': 'rgba(188, 31, 255, 0.2)',
-                '--bg-gradient': 'radial-gradient(circle at 50% 50%, rgba(80, 0, 100, 0.2) 0%, transparent 80%), radial-gradient(circle at 10% 10%, rgba(188, 31, 255, 0.05) 0%, transparent 40%), linear-gradient(180deg, #050505 0%, #0c080d 100%)'
-            },
-            orange: {
-                '--accent-red': '#ff8c1f',
-                '--accent-glow': 'rgba(255, 140, 31, 0.6)',
-                '--glass-bg-hover': 'rgba(255, 140, 31, 0.2)',
-                '--bg-gradient': 'radial-gradient(circle at 50% 50%, rgba(100, 50, 0, 0.2) 0%, transparent 80%), radial-gradient(circle at 10% 10%, rgba(255, 140, 31, 0.05) 0%, transparent 40%), linear-gradient(180deg, #050505 0%, #0d0a08 100%)'
-            },
-            pink: {
-                '--accent-red': '#ff1f8c',
-                '--accent-glow': 'rgba(255, 31, 140, 0.6)',
-                '--glass-bg-hover': 'rgba(255, 31, 140, 0.2)',
-                '--bg-gradient': 'radial-gradient(circle at 50% 50%, rgba(100, 0, 50, 0.2) 0%, transparent 80%), radial-gradient(circle at 10% 10%, rgba(255, 31, 140, 0.05) 0%, transparent 40%), linear-gradient(180deg, #050505 0%, #0d080a 100%)'
-            },
-            cyan: {
-                '--accent-red': '#1fffff',
-                '--accent-glow': 'rgba(31, 255, 255, 0.6)',
-                '--glass-bg-hover': 'rgba(31, 255, 255, 0.2)',
-                '--bg-gradient': 'radial-gradient(circle at 50% 50%, rgba(0, 100, 100, 0.2) 0%, transparent 80%), radial-gradient(circle at 10% 10%, rgba(31, 255, 255, 0.05) 0%, transparent 40%), linear-gradient(180deg, #050505 0%, #080d0d 100%)'
-            },
-            gold: {
-                '--accent-red': '#ffd700',
-                '--accent-glow': 'rgba(255, 215, 0, 0.6)',
-                '--glass-bg-hover': 'rgba(255, 215, 0, 0.2)',
-                '--bg-gradient': 'radial-gradient(circle at 50% 50%, rgba(100, 80, 0, 0.2) 0%, transparent 80%), radial-gradient(circle at 10% 10%, rgba(255, 215, 0, 0.05) 0%, transparent 40%), linear-gradient(180deg, #050505 0%, #0d0c08 100%)'
-            }
-        };
-
-        function setTheme(themeName) {
-            const theme = themes[themeName];
-            if (!theme) return;
-            
-            for (const [property, value] of Object.entries(theme)) {
-                document.documentElement.style.setProperty(property, value);
-            }
-            
-            // Mise à jour spécifique du background-image du body
-            document.body.style.backgroundImage = theme['--bg-gradient'];
-            
-            localStorage.setItem('darkgpt_theme', themeName);
-            if (document.getElementById('theme-modal').style.display === 'flex') {
-                closeModal('theme-modal');
+            if (confirm("Voulez-vous vous déconnecter ?")) {
+                localStorage.removeItem('darkgpt_unlocked');
+                location.reload();
             }
         }
 
-        // --- LOGIQUE PARAMÈTRES ---
-        function updateTempVal(val) {
-            document.getElementById('temp-val').textContent = val;
+        function showPricing() { document.getElementById('pricing-ui').style.display = 'flex'; }
+        function hidePricing() { document.getElementById('pricing-ui').style.display = 'none'; }
+
+        // --- GESTION DES PARAMÈTRES & THÈMES ---
+        function setTheme(color) {
+            document.body.className = color === 'red' ? '' : 'theme-' + color;
+            localStorage.setItem('darkgpt_theme', color);
+            // Mettre à jour les indicateurs visuels
+            document.querySelectorAll('.settings-group div div').forEach(div => {
+                div.style.border = 'none';
+            });
+            event?.target && (event.target.style.border = '2px solid white');
         }
 
         function saveSettings() {
             const settings = {
-                model: document.getElementById('setting-model').value,
-                temp: document.getElementById('setting-temp').value,
-                mode: document.getElementById('setting-mode').value
+                model: document.getElementById('model-select').value,
+                temp: document.getElementById('temp-range').value,
+                mode: document.getElementById('mode-select').value
             };
             localStorage.setItem('darkgpt_settings', JSON.stringify(settings));
+            closeModal('settings-modal');
+            appendMessage("✅ Paramètres mis à jour avec succès.", 'ai-msg');
         }
 
         function loadSettings() {
             const saved = localStorage.getItem('darkgpt_settings');
             if (saved) {
-                const settings = JSON.parse(saved);
-                document.getElementById('setting-model').value = settings.model;
-                document.getElementById('setting-temp').value = settings.temp;
-                document.getElementById('setting-mode').value = settings.mode;
-                updateTempVal(settings.temp);
+                const s = JSON.parse(saved);
+                document.getElementById('model-select').value = s.model;
+                document.getElementById('temp-range').value = s.temp;
+                document.getElementById('temp-val').textContent = s.temp;
+                document.getElementById('mode-select').value = s.mode;
             }
         }
 
@@ -976,31 +757,34 @@ Je suis votre allié numérique, prêt à explorer tous les sujets avec vous, **
             setTheme(savedTheme);
             loadSettings();
 
-            if (localStorage.getItem('darkgpt_unlocked') === 'true') {
-                const savedKey = localStorage.getItem('darkgpt_license_key');
-                if (savedKey) {
-                    // Vérifier silencieusement si la clé est toujours valide
-                    fetch('/api/validate-key', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ key: savedKey })
-                    })
-                    .then(res => res.json())
-                    .then(data => {
-                        if (data.valid) {
-                            document.getElementById('license-overlay').style.display = 'none';
-                            document.getElementById('main-ui').style.display = 'flex';
-                        } else {
-                            localStorage.removeItem('darkgpt_unlocked');
-                            location.reload();
-                        }
-                    })
-                    .catch(() => {
-                        // En cas d'erreur réseau, on laisse l'accès si c'était déjà déverrouillé
+            const savedKey = localStorage.getItem('darkgpt_license_key');
+            const isUnlocked = localStorage.getItem('darkgpt_unlocked') === 'true';
+
+            if (savedKey) {
+                // Vérifier si la clé est toujours valide
+                fetch('/api/validate-key', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ key: savedKey })
+                })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.valid) {
+                        localStorage.setItem('darkgpt_unlocked', 'true');
                         document.getElementById('license-overlay').style.display = 'none';
                         document.getElementById('main-ui').style.display = 'flex';
-                    });
-                }
+                    } else {
+                        localStorage.removeItem('darkgpt_unlocked');
+                        if (isUnlocked) location.reload();
+                    }
+                })
+                .catch(() => {
+                    // En cas d'erreur réseau, on laisse l'accès si c'était déjà déverrouillé
+                    if (isUnlocked) {
+                        document.getElementById('license-overlay').style.display = 'none';
+                        document.getElementById('main-ui').style.display = 'flex';
+                    }
+                });
             }
             loadCurrentChat();
         };
@@ -1194,37 +978,6 @@ Je suis votre allié numérique, prêt à explorer tous les sujets avec vous, **
             }
         }
 
-        function openHistory() {
-            const list = document.getElementById('history-list');
-            const history = JSON.parse(localStorage.getItem('darkgpt_history') || '[]');
-            
-            if (history.length === 0) {
-                list.innerHTML = '<p style="color:var(--text-dim); text-align:center; padding:20px;">Aucun historique disponible.</p>';
-            } else {
-                list.innerHTML = '';
-                history.forEach(session => {
-                    const firstUserMsg = session.messages.find(m => m.type === 'user-msg')?.text || "Nouvelle conversation";
-                    const item = document.createElement('div');
-                    item.className = 'history-item';
-                    item.innerHTML = `
-                        <div class="date">${session.date}</div>
-                        <div class="preview">${firstUserMsg}</div>
-                    `;
-                    item.onclick = () => {
-                        if (currentMessages.length > 1) {
-                            archiveCurrentChat();
-                        }
-                        currentMessages = session.messages;
-                        saveCurrentChat();
-                        loadCurrentChat();
-                        closeModal('history-modal');
-                    };
-                    list.appendChild(item);
-                });
-            }
-            openModal('history-modal');
-        }
-
         function openExport() { openModal('export-modal'); }
 
         function exportChat(format) {
@@ -1242,7 +995,7 @@ Je suis votre allié numérique, prêt à explorer tous les sujets avec vous, **
             } else if (format === 'txt') {
                 content = currentMessages.map(m => `${m.type === 'user-msg' ? 'VOUS' : 'DARKGPT'}: ${m.text}`).join('\n\n');
                 downloadFile(content, `${filename}.txt`, 'text/plain');
-            } else if (format === 'html') {
+            } else if (format === 'html' || format === 'pdf') {
                 content = `<html><head><style>body{font-family:sans-serif;background:#050505;color:white;padding:20px}.msg{margin-bottom:20px;padding:15px;border-radius:10px}.user{background:#222}.ai{background:#300;border:1px solid red}</style></head><body>`;
                 content += currentMessages.map(m => `<div class="msg ${m.type === 'user-msg' ? 'user' : 'ai'}"><strong>${m.type === 'user-msg' ? 'Utilisateur' : 'DarkGPT'}:</strong><br>${marked.parse(m.text)}</div>`).join('');
                 content += `</body></html>`;

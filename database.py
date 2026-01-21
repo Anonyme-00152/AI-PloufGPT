@@ -4,26 +4,35 @@ from datetime import datetime, timedelta
 import uuid
 
 # Sur Vercel, le seul répertoire scriptable est /tmp
-if os.environ.get('VERCEL'):
+# Note: SQLite sur Vercel est éphémère. Pour une persistance réelle, utilisez une DB externe.
+if os.environ.get('VERCEL') or os.environ.get('VERCEL_ENV'):
     DB_PATH = '/tmp/database.db'
 else:
     DB_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'database.db')
 
 def init_db():
-    conn = sqlite3.connect(DB_PATH)
-    cursor = conn.cursor()
-    cursor.execute('''
-        CREATE TABLE IF NOT EXISTS keys (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            key_value TEXT UNIQUE NOT NULL,
-            plan_type TEXT NOT NULL,
-            created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-            expires_at DATETIME,
-            is_active INTEGER DEFAULT 1
-        )
-    ''')
-    conn.commit()
-    conn.close()
+    try:
+        # S'assurer que le répertoire existe si on n'est pas sur Vercel
+        if not os.environ.get('VERCEL') and not os.environ.get('VERCEL_ENV'):
+            os.makedirs(os.path.dirname(DB_PATH), exist_ok=True)
+            
+        conn = sqlite3.connect(DB_PATH)
+        cursor = conn.cursor()
+        cursor.execute('''
+            CREATE TABLE IF NOT EXISTS keys (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                key_value TEXT UNIQUE NOT NULL,
+                plan_type TEXT NOT NULL,
+                created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+                expires_at DATETIME,
+                is_active INTEGER DEFAULT 1
+            )
+        ''')
+        conn.commit()
+        conn.close()
+        print(f"Base de données initialisée à : {DB_PATH}")
+    except Exception as e:
+        print(f"Erreur lors de l'initialisation de la base de données : {e}")
 
 def generate_key(plan_type):
     key_value = f"DARK-{uuid.uuid4().hex[:8].upper()}-{plan_type[:3].upper()}"

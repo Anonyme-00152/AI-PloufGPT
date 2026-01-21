@@ -10,6 +10,9 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 app = Flask(__name__)
 CORS(app)
 
+# Initialisation de la base de données au démarrage
+database.init_db()
+
 # Récupération de la clé API
 # Récupération des clés
 GROQ_API_KEY = os.getenv("GROQ_API_KEY")
@@ -40,13 +43,19 @@ def license_manager():
 
 @app.route('/api/validate-key', methods=['POST'])
 def api_validate_key():
-    data = request.json
-    key = data.get("key")
-    if not key:
-        return jsonify({"valid": False, "message": "Clé manquante"}), 400
-    
-    is_valid, message = database.validate_key(key)
-    return jsonify({"valid": is_valid, "message": message})
+    try:
+        data = request.json
+        key = data.get("key")
+        if not key:
+            return jsonify({"valid": False, "message": "Clé manquante"}), 400
+        
+        is_valid, message = database.validate_key(key)
+        return jsonify({"valid": is_valid, "message": message})
+    except Exception as e:
+        print(f"Erreur validation clé: {e}")
+        # En cas d'erreur DB (ex: table manquante sur Vercel), on réinitialise
+        database.init_db()
+        return jsonify({"valid": False, "message": "Erreur serveur, veuillez réessayer"})
 
 @app.route('/api/admin/keys', methods=['GET'])
 def api_get_keys():
@@ -94,6 +103,15 @@ def api_delete_key():
     key = data.get("key")
     database.delete_key(key)
     return jsonify({"success": True})
+
+@app.route('/api/admin/init-db', methods=['POST'])
+def api_init_db():
+    auth = request.headers.get("Authorization")
+    if auth != f"Bearer {ADMIN_PASSWORD}":
+        return jsonify({"error": "Non autorisé"}), 401
+    
+    database.init_db()
+    return jsonify({"success": True, "message": "Base de données réinitialisée"})
 
 @app.route('/api/chat', methods=['POST'])
 def chat():

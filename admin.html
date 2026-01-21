@@ -138,6 +138,11 @@
                     </div>
                     <button class="btn" onclick="generateKey()">GÉNÉRER LA CLÉ</button>
                     
+                    <div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1);">
+                        <button class="btn" style="background: #444;" onclick="initDatabase()">RÉINITIALISER DB</button>
+                        <p style="font-size: 10px; color: #888; margin-top: 5px;">Utile si les clés ne s'affichent pas après un déploiement Vercel.</p>
+                    </div>
+
                     <div id="new-key-display" style="margin-top: 20px; display: none;">
                         <label>Clé générée :</label>
                         <div style="display: flex; gap: 10px;">
@@ -290,6 +295,24 @@
             } catch (e) {
                 console.error('Erreur:', e);
                 showAlert('Erreur lors de la suppression: ' + e.message);
+            }
+        }
+
+        async function initDatabase() {
+            if (!confirm("Voulez-vous réinitialiser la base de données ? Cela peut aider si les clés ne fonctionnent pas.")) return;
+            try {
+                const response = await fetch('/api/admin/init-db', {
+                    method: 'POST',
+                    headers: { 'Authorization': 'Bearer ' + adminToken }
+                });
+                if (response.ok) {
+                    showAlert('Base de données réinitialisée avec succès!', 'success');
+                    loadKeys();
+                } else {
+                    showAlert('Erreur lors de la réinitialisation');
+                }
+            } catch (e) {
+                showAlert('Erreur: ' + e.message);
             }
         }
 
