@@ -1,5 +1,6 @@
 import os
 import httpx
+import sqlite3
 from fastapi import FastAPI, HTTPException, Request, Depends
 from fastapi.responses import FileResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
@@ -11,8 +12,10 @@ import database
 # Initialisation du Nexus Core
 app = FastAPI(title="Nexus Core AI")
 
-# Initialisation de la base de données
-database.init_db()
+# Initialisation de la base de données au démarrage
+@app.on_event("startup")
+async def startup_event():
+    database.init_db()
 
 # Configuration des clés
 GROQ_API_KEY = os.getenv("GROQ_API_KEY")
@@ -51,6 +54,9 @@ async def read_license_manager():
 
 @app.post("/api/validate-key")
 async def api_validate_key(request: KeyActionRequest):
+    # S'assurer que la DB est initialisée (important pour Vercel /tmp)
+    database.init_db()
+    
     if not request.key:
         return {"valid": False, "message": "Clé manquante"}
     
@@ -63,6 +69,7 @@ async def api_get_keys(request: Request):
     if auth != f"Bearer {ADMIN_PASSWORD}":
         raise HTTPException(status_code=401, detail="Non autorisé")
         
+    database.init_db()
     keys = database.get_all_keys()
     formatted_keys = []
     for k in keys:
@@ -84,6 +91,7 @@ async def api_generate_key(request: Request, data: KeyActionRequest):
     if data.plan_type not in ["Premium", "Trimestriel", "Permanent"]:
         raise HTTPException(status_code=400, detail="Type de plan invalide")
         
+    database.init_db()
     new_key = database.generate_key(data.plan_type)
     return {"key": new_key}
 
@@ -93,6 +101,7 @@ async def api_delete_key(request: Request, data: KeyActionRequest):
     if auth != f"Bearer {ADMIN_PASSWORD}":
         raise HTTPException(status_code=401, detail="Non autorisé")
         
+    database.init_db()
     database.delete_key(data.key)
     return {"success": True}
 
@@ -112,6 +121,7 @@ async def chat(request: ChatRequest):
         raise HTTPException(status_code=403, detail="Accès refusé : Licence manquante.")
 
     # Validation de la licence
+    database.init_db()
     is_valid, msg = database.validate_key(request.license_key)
     if not is_valid:
         raise HTTPException(status_code=403, detail=f"Accès refusé : {msg}")
